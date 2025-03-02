@@ -22,11 +22,18 @@ namespace UlamRandomizer
                 switch (optionChosen)
                 {
                     case 1:
-                        Console.WriteLine("Enter the ulam to be added:");
-                        string ulamAdded = Console.ReadLine();
-                        ulamList.Add(ulamAdded);
-                        Console.WriteLine("Would you like to do another operation? Y/N");
+                        char addAgain = 'Y';
+                        while (addAgain == 'Y')
+                        {
+                            Console.WriteLine("Enter the ulam to be added:");
+                            string ulamAdded = Console.ReadLine();
+                            ulamList.Add(ulamAdded);
+                            Console.WriteLine("\n Add another one? Y/N");
+                            addAgain = Console.ReadLine().ToUpper()[0];
+                        }
+                            Console.WriteLine("Would you like to do another operation? Y/N");
                         ans = Console.ReadLine().ToUpper()[0];
+                        
                         break;
 
                     case 2:
