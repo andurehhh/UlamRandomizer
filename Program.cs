@@ -12,6 +12,7 @@ namespace UlamRandomizer
             char ans = 'Y';
 
             Console.WriteLine("Welcome to AnUlam!");
+            Console.WriteLine("ULAM RANDOMIZER");
             do
             {
                 foreach (string opt in options)
