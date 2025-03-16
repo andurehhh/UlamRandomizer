@@ -1,74 +1,116 @@
 ﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 namespace UlamRandomizer
 {
     internal class Program
     {
+        static List<string> ulamList = new List<string>();
         static void Main(string[] args)
         {
-            List<string> ulamList = new List<string>();
-            string[] options = { "[1] add Ulam", "[2] Remove Ulam", "[3] Display Ulam", "[4] Pick an Ulam!", "[5] Exit" };
             int optionChosen;
-            char ans = 'Y';
 
             Console.WriteLine("Welcome to AnUlam!");
-            Console.WriteLine("ULAM RANDOMIZER");
+
             do
             {
-                foreach (string opt in options)
-                    Console.WriteLine(opt);
-                Console.WriteLine("\n Please enter what you would like to do:");
-                optionChosen = Convert.ToInt16(Console.ReadLine());
-            
+                DisplayActions();
+                optionChosen = GetUserInput();
+
                 switch (optionChosen)
                 {
                     case 1:
-                        char addAgain = 'Y';
-                        while (addAgain == 'Y')
-                        {
-                            Console.WriteLine("Enter the ulam to be added:");
-                            string ulamAdded = Console.ReadLine();
-                            ulamList.Add(ulamAdded);
-                            Console.WriteLine("\n Add another one? Y/N");
-                            addAgain = Console.ReadLine().ToUpper()[0];
-                        }
-                            Console.WriteLine("Would you like to do another operation? Y/N");
-                        ans = Console.ReadLine().ToUpper()[0];
-                        
+                        AddAnotherUlam();
                         break;
 
                     case 2:
-                        Console.WriteLine("Enter the ulam you wish to remove:");
-                        string forRemoval = Console.ReadLine();
-                        if (forRemoval != null)
-                        {
-                        ulamList.Remove(forRemoval);
-                        }
-                        Console.WriteLine("Would you like to do another operation? Y/N");
-                        ans = Console.ReadLine().ToUpper()[0];
+                        RemoveUlam();
                         break;
 
                     case 3:
-                        Console.WriteLine("The list of ulam are as follows: ");
-                        foreach (string ulam in ulamList)
-                            Console.WriteLine(ulam);
-                        Console.WriteLine("Would you like to do another operation? Y/N");
-                        ans = Console.ReadLine().ToUpper()[0];
+                        DisplayUlam();
                         break;
 
                     case 4:
-                        Random rndUlam = new Random();
-                        Console.WriteLine($"The selected ulam is {ulamList[rndUlam.Next(1,ulamList.Count)]}!\n");
-                        Console.WriteLine("Would you like to do another operation? Y/N");
-                        ans = Console.ReadLine().ToUpper()[0];
+                        RandomizeUlam();
                         break;
 
                     default:
                         Console.WriteLine("Thank you for using our services!");
-                    break;
+                        break;
                 }
-            } while (ans == 'y' || ans == 'Y');
+            } while (optionChosen != 5);
 
+        }
+
+        private static int GetUserInput()
+        {
+            Console.WriteLine("\n Please enter what you would like to do:");
+            int optionChosen = Convert.ToInt16(Console.ReadLine());
+            return optionChosen;
+        }
+        private static void DisplayActions()
+        {
+            string[] options = { "[1] add Ulam", "[2] Remove Ulam", "[3] Display Ulam", "[4] Pick an Ulam!", "[5] Exit" };
+
+            Console.WriteLine("---------------------");
+            foreach (string opt in options)
+            {
+                Console.WriteLine(opt);
+            }
+        }
+        private static void AddUlam()
+        {
+            Console.WriteLine("Enter the ulam to be added:");
+            string ulamAdded = Console.ReadLine();
+            if (!ulamList.Contains(ulamAdded))
+            {
+                ulamList.Add(ulamAdded);
+            }
+            else
+            {
+                Console.WriteLine("Ulam already added.");
+            }
+        }
+        private static void AddAnotherUlam()
+        {
+            char ulamAnother;
+            do
+            {
+                AddUlam();
+                Console.WriteLine("\nAdd another one? Y/N");
+                ulamAnother = (char)Console.ReadLine()[0];
+            }
+            while (ulamAnother.Equals('Y') || ulamAnother.Equals('y'));
+        }
+        private static void RemoveUlam()
+        {
+            Console.WriteLine("Enter the ulam you wish to remove:");
+            string forRemoval = Console.ReadLine();
+            if (forRemoval != null)
+            {
+                if (ulamList.Contains(forRemoval))
+                {
+                    ulamList.Remove(forRemoval);
+                    Console.WriteLine($"Removed {forRemoval} from the list.");
+                }
+                else
+                {
+                    Console.WriteLine($"{forRemoval} does not exist in the list.");
+                }
+            }
+        }
+        private static void DisplayUlam()
+        {
+            Console.WriteLine("---------------------\nThe list of ulam are as follows: ");
+            foreach (string ulam in ulamList)
+                Console.WriteLine(ulam);
+            Console.WriteLine("\n");
+        }
+        private static void RandomizeUlam()
+        {
+            Random rndUlam = new Random();
+            Console.WriteLine($"The selected ulam is {ulamList[rndUlam.Next(ulamList.Count)]}!\n");
         }
     }
 }
