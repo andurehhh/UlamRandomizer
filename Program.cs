@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using UlamRandomizer.UlamRandomizerBL;
 
 namespace UlamRandomizer
 {
     internal class Program
     {
-        static List<string> ulamList = new List<string>();
         static void Main(string[] args)
         {
             int optionChosen;
@@ -24,7 +24,7 @@ namespace UlamRandomizer
                         break;
 
                     case 2:
-                        RemoveUlam();
+                        AskUlamToRemove();
                         break;
 
                     case 3:
@@ -32,7 +32,7 @@ namespace UlamRandomizer
                         break;
 
                     case 4:
-                        RandomizeUlam();
+                        DisplayRandomUlam();
                         break;
 
                     default:
@@ -59,58 +59,58 @@ namespace UlamRandomizer
                 Console.WriteLine(opt);
             }
         }
-        private static void AddUlam()
+        private static void AskUlamToAdd()
         {
             Console.WriteLine("Enter the ulam to be added:");
-            string ulamAdded = Console.ReadLine();
-            if (!ulamList.Contains(ulamAdded))
+            string ulamInput = Console.ReadLine();
+
+            if (BusinessDataLogic.AddUlam(UlamtoAdd: ulamInput))
             {
-                ulamList.Add(ulamAdded);
+                Console.WriteLine($"Added {ulamInput} successfully.");
             }
             else
             {
-                Console.WriteLine("Ulam already added.");
+                Console.WriteLine($"Error: {ulamInput} already exists.");
             }
+                ;
         }
         private static void AddAnotherUlam()
         {
             char ulamAnother;
             do
             {
-                AddUlam();
+                AskUlamToAdd();
                 Console.WriteLine("\nAdd another one? Y/N");
                 ulamAnother = (char)Console.ReadLine()[0];
             }
             while (ulamAnother.Equals('Y') || ulamAnother.Equals('y'));
         }
-        private static void RemoveUlam()
+        private static void AskUlamToRemove()
         {
             Console.WriteLine("Enter the ulam you wish to remove:");
-            string forRemoval = Console.ReadLine();
-            if (forRemoval != null)
+            string ulamInput = Console.ReadLine();
+            if (BusinessDataLogic.RemoveUlam(ulamInput))
             {
-                if (ulamList.Contains(forRemoval))
-                {
-                    ulamList.Remove(forRemoval);
-                    Console.WriteLine($"Removed {forRemoval} from the list.");
-                }
-                else
-                {
-                    Console.WriteLine($"{forRemoval} does not exist in the list.");
-                }
+                Console.WriteLine($"Successfully removed {ulamInput} from list.");
             }
+            else
+            {
+                Console.WriteLine($"ERROR: {ulamInput} not in list.");
+            }
+                ;
+
         }
         private static void DisplayUlam()
         {
             Console.WriteLine("---------------------\nThe list of ulam are as follows: ");
-            foreach (string ulam in ulamList)
+            foreach (string ulam in BusinessDataLogic.ulamList)
                 Console.WriteLine(ulam);
             Console.WriteLine("\n");
         }
-        private static void RandomizeUlam()
+        private static void DisplayRandomUlam()
         {
-            Random rndUlam = new Random();
-            Console.WriteLine($"The selected ulam is {ulamList[rndUlam.Next(ulamList.Count)]}!\n");
+            int rndUlamIndex = BusinessDataLogic.RandomizeUlam(BusinessDataLogic.ulamList);
+            Console.WriteLine($"The selected ulam is {BusinessDataLogic.ulamList[rndUlamIndex]}. \n");
         }
     }
 }
