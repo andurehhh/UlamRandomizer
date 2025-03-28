@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
-using UlamRandomizer.UlamRandomizerBL;
+using UlamRandomizerBusinessLogic;
 
 namespace UlamRandomizer
 {
@@ -111,6 +111,7 @@ namespace UlamRandomizer
         {
             int rndUlamIndex = BusinessDataLogic.RandomizeUlam(BusinessDataLogic.ulamList);
             Console.WriteLine($"The selected ulam is {BusinessDataLogic.ulamList[rndUlamIndex]}. \n");
+            Thread.Sleep(2000);
         }
     }
 }

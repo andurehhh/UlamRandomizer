@@ -1,4 +1,4 @@
-﻿namespace UlamRandomizer.UlamRandomizerBL
+﻿namespace UlamRandomizerBusinessLogic
 {
     public class BusinessDataLogic
     {
