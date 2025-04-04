@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using UlamRandomizerBusinessLogic;
 
@@ -9,7 +10,6 @@ namespace UlamRandomizer
         static void Main(string[] args)
         {
             int optionChosen;
-
             Console.WriteLine("Welcome to AnUlam!");
 
             do
@@ -32,7 +32,9 @@ namespace UlamRandomizer
                         break;
 
                     case 4:
+
                         DisplayRandomUlam();
+
                         break;
 
                     default:
@@ -59,18 +61,34 @@ namespace UlamRandomizer
                 Console.WriteLine(opt);
             }
         }
+        private static void DisplayArrowActions()
+        {
+            string[] options = { "[<-] Reject", "[->] Choose", "[V] Skip", "[^] Back to menu" };
+
+            Console.WriteLine("---------------------");
+            foreach (string opt in options)
+            {
+                Console.WriteLine(opt);
+            }
+            Console.WriteLine("---------------------\n");
+        }
         private static void AskUlamToAdd()
         {
             Console.WriteLine("Enter the ulam to be added:");
-            string ulamInput = Console.ReadLine();
+            string UlamName = Console.ReadLine();
 
-            if (BusinessDataLogic.AddUlam(UlamtoAdd: ulamInput))
+            Console.WriteLine("Enter the ulam's Main Ingredient:");
+            string MainIngredient = Console.ReadLine();
+
+            Ulam NewUlam = BusinessDataLogic.CreateUlamObj(UlamName, MainIngredient);
+
+            if (BusinessDataLogic.AddUlam(NewUlam))
             {
-                Console.WriteLine($"Added {ulamInput} successfully.");
+                Console.WriteLine($"Added {NewUlam.UlamName} successfully.");//can i return the string of the ulam?
             }
             else
             {
-                Console.WriteLine($"Error: {ulamInput} already exists.");
+                Console.WriteLine($"Error: {NewUlam.UlamName} already exists.");
             }
                 ;
         }
@@ -85,33 +103,98 @@ namespace UlamRandomizer
             }
             while (ulamAnother.Equals('Y') || ulamAnother.Equals('y'));
         }
+
         private static void AskUlamToRemove()
         {
             Console.WriteLine("Enter the ulam you wish to remove:");
-            string ulamInput = Console.ReadLine();
-            if (BusinessDataLogic.RemoveUlam(ulamInput))
+            //string ulamInput = Console.ReadLine();
+            string UlamName = Console.ReadLine();
+
+            if (BusinessDataLogic.RemoveUlam(BusinessDataLogic.SearchUlamList(UlamName)))
             {
-                Console.WriteLine($"Successfully removed {ulamInput} from list.");
+                Console.WriteLine($"Successfully removed {UlamName} from list.");
             }
             else
             {
-                Console.WriteLine($"ERROR: {ulamInput} not in list.");
+                Console.WriteLine($"ERROR: {UlamName} not in list.");
             }
-                ;
+
 
         }
         private static void DisplayUlam()
         {
             Console.WriteLine("---------------------\nThe list of ulam are as follows: ");
-            foreach (string ulam in BusinessDataLogic.ulamList)
-                Console.WriteLine(ulam);
-            Console.WriteLine("\n");
+            foreach (Ulam ulam in BusinessDataLogic.ulamList)
+            {
+                Console.WriteLine(ulam.UlamName);
+                Console.WriteLine($"Main Ingredient: {ulam.MainIngredient}");
+            }
+            //Console.WriteLine("\n");
         }
         private static void DisplayRandomUlam()
         {
-            int rndUlamIndex = BusinessDataLogic.RandomizeUlam(BusinessDataLogic.ulamList);
-            Console.WriteLine($"The selected ulam is {BusinessDataLogic.ulamList[rndUlamIndex]}. \n");
-            Thread.Sleep(2000);
+            if (BusinessDataLogic.ulamList.Count > 0)
+            {
+                int rndUlamIndex = BusinessDataLogic.RandomizeUlam();
+                string ulamRandomized = BusinessDataLogic.ulamList[rndUlamIndex].UlamName;
+                Console.WriteLine($"The selected ulam is {ulamRandomized}. \n");
+                //Thread.Sleep(2000);
+                ConfirmRandomUlam(rndUlamIndex);
+            }
+            else
+            {
+                Console.WriteLine("ERROR: No item in the list.");
+            }
+
         }
+
+        private static void ConfirmRandomUlam(int RandomUlamIndex)
+        {
+            Ulam SelectedRandomUlam = BusinessDataLogic.ulamList[RandomUlamIndex];
+
+            //remove, choose or skip
+            DisplayArrowActions();
+            var kc = Console.ReadKey(true).Key;
+            switch (kc)
+            {
+                case ConsoleKey.LeftArrow: //Reject
+                    RemoveFromRandom(SelectedRandomUlam);
+                    break;
+
+                case ConsoleKey.RightArrow: //Accept
+                    ChosenFromRandom(SelectedRandomUlam);
+                    Console.ReadKey(true);
+                    break;
+
+                case ConsoleKey.UpArrow: //Back
+                    break;
+
+                case ConsoleKey.DownArrow: //Skip
+                    DisplayRandomUlam();
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid button, try again.");
+                    ConfirmRandomUlam(RandomUlamIndex);
+                    break;
+            }
+
+        }
+
+        public static void ChosenFromRandom(Ulam SelectedRandomUlam)
+        {
+            Console.WriteLine($"Ulam Chosen: {BusinessDataLogic.GetUlamName(SelectedRandomUlam)} \n" +
+                $"Main Ingredient: {BusinessDataLogic.GetUlamMainIng(SelectedRandomUlam)}");
+
+        }
+
+        public static void RemoveFromRandom(Ulam SelectedRandomUlam)
+        {
+            BusinessDataLogic.RemoveUlam(SelectedRandomUlam);
+            Console.WriteLine($"Removed {BusinessDataLogic.GetUlamName(SelectedRandomUlam)}");
+
+        }
+
+
     }
 }
