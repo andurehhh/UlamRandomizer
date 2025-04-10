@@ -1,93 +1,57 @@
-﻿namespace UlamRandomizerBusinessLogic
+﻿using UlamRandomizerDataLogic;
+using UlamCommon;
+namespace UlamRandomizerBusinessLogic
 {
-    public class BusinessDataLogic 
+    public class BusinessLogic
     {
-        public static List<Ulam> ulamList = new List<Ulam>();
-        public static bool AddUlam(Ulam ulamInput)
-        {
-            if (!IsInList(ulamInput.UlamName))
-            {
-                ulamList.Add(ulamInput);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public static bool RemoveUlam(Ulam ulamInput)
-        {
-            if (IsInList(ulamInput.UlamName))
-            {
-                ulamList.Remove(ulamInput);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         
-
-        public static Ulam CreateUlamObj(string name, string MainIngredient)
-        {
-            Ulam CreatedUlam = new Ulam(name,MainIngredient);
-            return CreatedUlam;
-        }
-
-        public static bool IsInList(string UlamInput)
-        {
-            foreach (Ulam ulam in ulamList)
-            {
-                if(GetUlamName(ulam).ToLower() == UlamInput.ToLower())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public static Ulam SearchUlamList(string UlamToFind)
         {
-            foreach (Ulam ulam in ulamList)
+            foreach (Ulam ulam in DataLogic.GetUlamList())
             {
                 if (GetUlamName(ulam) == UlamToFind)
                 {
                     return ulam;
-                    //return ulamList.IndexOf(ulam);
                 }
             }
             return null;
-            //return -1;
         }
-
-        public static string GetUlamName(Ulam UlamNameToPrint)
-        {
-            string UlamName = UlamNameToPrint.UlamName;
-            return UlamName;
-        }
-
-        public static string GetUlamMainIng(Ulam UlamIngredientToPrint)
-        {
-            string UlamIngredient = UlamIngredientToPrint.MainIngredient;
-            return UlamIngredient;
-        }
-
-        public static int RandomizeUlam(/*List<Ulam> ulamList*/)
+        public static int RandomizeUlam()
         {
             Random rndUlam = new Random();
-            int rndUlamIndex = rndUlam.Next(ulamList.Count);
+            int rndUlamIndex = rndUlam.Next(DataLogic.ulamList.Count);
             return rndUlamIndex;
         }
 
-        
-
-
-
+        //helper methods
+        public static Ulam CreateUlamObj(string name, string MainIngredient)
+        {
+            return DataLogic.CreateUlamObj(name, MainIngredient);
+        }
+        public static bool RemoveUlam(Ulam ulamInput)
+        {
+            return DataLogic.RemoveUlam(ulamInput);
+        }
+        public static bool AddUlam(Ulam ulamInput)
+        {
+            return DataLogic.AddUlam(ulamInput);
+        }
+        public static List<Ulam> GetUlamList()
+        {
+            return DataLogic.GetUlamList();
+        }  
+        public static string GetUlamName(Ulam UlamNameToPrint)
+        {
+            return DataLogic.GetUlamName(UlamNameToPrint);
+        }
+        public static string GetUlamMainIng(Ulam UlamMainIngToPrint)
+        {
+            return DataLogic.GetUlamMainIng(UlamMainIngToPrint);
+        }
+        public static void CreateDummyUlam()
+        {
+            DataLogic.CreateDummyUlam();
+        }
     }
-    
-}// Add the 
-//- addition of yes or no
-//- categories
-//- Main Ingredient
+
+}

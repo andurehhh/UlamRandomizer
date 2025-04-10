@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\UlamRandomizerDataLogic\UlamRandomizerDataLogic.csproj" />
-    <ProjectReference Include="..\Ulam\UlamCommon.csproj" />
-  </ItemGroup>
-
 </Project>

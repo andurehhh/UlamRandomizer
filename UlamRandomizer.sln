@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlamRandomizer", "UlamRando
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlamRandomizerBusinessLogic", "UlamRandomizerBusinessLogic\UlamRandomizerBusinessLogic.csproj", "{FDBEF341-9141-0CA8-E7CA-43240E311DBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlamRandomizerDataLogic", "UlamRandomizerDataLogic\UlamRandomizerDataLogic.csproj", "{020AC6DA-9C31-7405-3786-56833A65C1CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UlamCommon", "Ulam\UlamCommon.csproj", "{63F347E6-E0DA-FF56-FE7F-320DD8BCDEE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{FDBEF341-9141-0CA8-E7CA-43240E311DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDBEF341-9141-0CA8-E7CA-43240E311DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDBEF341-9141-0CA8-E7CA-43240E311DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020AC6DA-9C31-7405-3786-56833A65C1CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020AC6DA-9C31-7405-3786-56833A65C1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020AC6DA-9C31-7405-3786-56833A65C1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020AC6DA-9C31-7405-3786-56833A65C1CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63F347E6-E0DA-FF56-FE7F-320DD8BCDEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63F347E6-E0DA-FF56-FE7F-320DD8BCDEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63F347E6-E0DA-FF56-FE7F-320DD8BCDEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63F347E6-E0DA-FF56-FE7F-320DD8BCDEE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

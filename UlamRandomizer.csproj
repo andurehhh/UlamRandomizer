@@ -9,12 +9,19 @@
 
   <ItemGroup>
     <Compile Remove="UlamRandomizerBusinessLogic\**" />
+    <Compile Remove="UlamRandomizerDataLogic\**" />
+    <Compile Remove="Ulam\**" />
     <EmbeddedResource Remove="UlamRandomizerBusinessLogic\**" />
+    <EmbeddedResource Remove="UlamRandomizerDataLogic\**" />
+    <EmbeddedResource Remove="Ulam\**" />
     <None Remove="UlamRandomizerBusinessLogic\**" />
+    <None Remove="UlamRandomizerDataLogic\**" />
+    <None Remove="Ulam\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="UlamRandomizerBusinessLogic\UlamRandomizerBusinessLogic.csproj" />
+    <ProjectReference Include="Ulam\UlamCommon.csproj" />
   </ItemGroup>
 
 </Project>
