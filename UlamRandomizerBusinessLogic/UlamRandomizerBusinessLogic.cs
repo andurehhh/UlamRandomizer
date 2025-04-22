@@ -9,7 +9,7 @@ namespace UlamRandomizerBusinessLogic
         {
             foreach (Ulam ulam in DataLogic.GetUlamList())
             {
-                if (GetUlamName(ulam) == UlamToFind)
+                if (GetUlamName(ulam).Equals(UlamToFind, StringComparison.OrdinalIgnoreCase))
                 {
                     return ulam;
                 }
