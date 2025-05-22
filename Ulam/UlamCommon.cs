@@ -11,10 +11,12 @@ public class Ulam
     public string UlamName { get; set; }
     public string MainIngredient { get; set; }
     public bool isMarked { get; set; }
-    public Ulam(string UlamName, string MainIngredient)
+    public string ulamDesciption { get; set; }
+    public Ulam(string UlamName, string MainIngredient, string ulamDescription)
     {
         this.UlamName = UlamName;
         this.MainIngredient = MainIngredient;
+        this.ulamDesciption = ulamDescription;
         isMarked = false;
     }
 

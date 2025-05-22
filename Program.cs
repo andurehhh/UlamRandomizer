@@ -10,9 +10,10 @@ namespace UlamRandomizer
     {
         static void Main(string[] args)
         {
+            BusinessLogic BL = new BusinessLogic();
             int optionChosen;
             Console.WriteLine("Welcome to AnUlam!");
-            BusinessLogic.CreateDummyUlam();
+            //BusinessLogic.CreateDummyUlam();
             do
             {
                 DisplayActions();
@@ -95,6 +96,8 @@ namespace UlamRandomizer
             string UlamName = Console.ReadLine();
             Console.WriteLine("Enter the ulam's Main Ingredient:");
             string MainIngredient = Console.ReadLine();
+            Console.WriteLine("Enter a short Description:");
+            string Description = Console.ReadLine();
 
             if (UlamName == "" || MainIngredient == "")
             {
@@ -102,9 +105,9 @@ namespace UlamRandomizer
             }
             else
             {
-                Ulam NewUlam = BusinessLogic.CreateUlamObj(UlamName, MainIngredient);
+                Ulam NewUlam = BusinessLogic.CreateUlamObj(UlamName, MainIngredient,Description);
 
-                if (BusinessLogic.AddUlam(NewUlam))
+                if (!BusinessLogic.IsInList(NewUlam))
                 {
                     Console.WriteLine($"Added {NewUlam.UlamName} successfully.");
                 }
@@ -135,7 +138,7 @@ namespace UlamRandomizer
             }
             else
             {
-                if (BusinessLogic.RemoveUlam(BusinessLogic.SearchUlamList(UlamName)))
+                if (BusinessLogic.IsInList(BusinessLogic.SearchUlamList(UlamName)))
                 {
                     Console.WriteLine($"Successfully removed {UlamName} from list.");
                 }
@@ -149,11 +152,11 @@ namespace UlamRandomizer
         private static void DisplayUlam()
         {
             Console.WriteLine("---------------------\nThe list of ulam are as follows: ");
-            foreach (Ulam ulam in BusinessLogic.GetUlamList())
+            foreach (Ulam ulam in BusinessLogic.GetUlams())
             {
                 Console.WriteLine(ulam.UlamName);
                 Console.WriteLine($"Main Ingredient: {ulam.MainIngredient}");
-                Console.WriteLine("\n");
+                Console.WriteLine($"Description: {ulam.ulamDesciption}\n");
             }
 
         }
@@ -167,16 +170,16 @@ namespace UlamRandomizer
             {
                 int RandomUlamIndex = BusinessLogic.RandomizeUlam();
 
-                string ulamRandomized = BusinessLogic.GetUlamList()[RandomUlamIndex].UlamName;
+                string ulamRandomized = BusinessLogic.GetUlams()[RandomUlamIndex].UlamName;
                 Console.WriteLine($"The selected ulam is {ulamRandomized}. \n");
-                Ulam SelectedRandomUlam = BusinessLogic.GetUlamList()[RandomUlamIndex];
+                Ulam SelectedRandomUlam = BusinessLogic.GetUlams()[RandomUlamIndex];
 
                 DisplayArrowActions();
                 kc = Console.ReadKey(true).Key;
                 switch (kc)
                 {
                     case ConsoleKey.LeftArrow: //Reject
-                        if (BusinessLogic.GetUlamList().Count > 1)
+                        if (BusinessLogic.GetUlams().Count > 1)
                         {
                             RemoveFromRandom(SelectedRandomUlam);
                         }
