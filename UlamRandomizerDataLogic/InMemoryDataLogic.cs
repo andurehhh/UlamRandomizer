@@ -41,7 +41,7 @@ namespace UlamRandomizerDataLogic
 
         public void CreateUlam(Ulam ulam)
         {
-            throw new NotImplementedException();
+            ulamList.Add(ulam);
         }
 
         public List<Ulam> GetUlams()
@@ -51,12 +51,32 @@ namespace UlamRandomizerDataLogic
 
         public void RemoveUlam(Ulam ulam)
         {
-            throw new NotImplementedException();
+            //for (int i = 0; i < ulamList.Count; i++)
+            //{
+            //    if (ulamList[i].UlamName.Equals(ulam.UlamName,StringComparison.OrdinalIgnoreCase))
+            //    {
+            //        ulamList.Remove(ulam);
+            //    }
+            //}
+            ulamList.Remove(ulam);
         }
 
-        public void UpdateUlam(Ulam ulam)
+        public void UpdateUlam(Ulam ulamEdit)
         {
-            throw new NotImplementedException();
+            int index = -1;
+            for (int i = 0; i < ulamList.Count; i++)
+            {
+                if (ulamList[i].UlamName.Equals(ulamEdit.UlamName, StringComparison.OrdinalIgnoreCase))
+                {
+                    Ulam ulamToChange = ulamList[i];
+                    ulamToChange.MainIngredient = ulamEdit.MainIngredient;
+                    if (ulamToChange.ulamDescription != "")
+                    {
+                        ulamList[i].ulamDescription = ulamToChange.ulamDescription;
+                    }
+                }
+            }
+
         }
     }
 

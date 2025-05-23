@@ -2,45 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using UlamCommon;
 
 namespace UlamRandomizerDataLogic
 {
-    public class FileDataLogic : IURDataLogic
+    public class JsonDataLogic : IURDataLogic
     {
         List<Ulam> ulamList = new List<Ulam>();
-        string filepath = "ulams.txt";
-        public FileDataLogic()
+        string JsonFilePath = "ulam.json";
+
+        public JsonDataLogic()
         {
-            ImportFromFile();
+            ImportFromJson();
         }
 
-        private void ImportFromFile()
+        private void ImportFromJson()
         {
-            var ulamLine = File.ReadAllLines(filepath);
-            foreach (var line in ulamLine)
-            {
-                var parts = line.Split('|');
-
-                ulamList.Add(new Ulam
-                    (parts[0], parts[1], parts[2])
-                    );
-            }
+            string jsonText = File.ReadAllText(JsonFilePath);
+            ulamList = JsonSerializer.Deserialize<List<Ulam>>(jsonText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        private void ExportToFile()
+        private void ExportToJson()
         {
-            var UlamLines = new string[ulamList.Count];
-
-            for (int i = 0; i < ulamList.Count; i++)
-            {
-                UlamLines[i] = $"{ulamList[i].UlamName}|{ulamList[i].MainIngredient}";
-            }
-
-            File.WriteAllLines(filepath, UlamLines);
+            string jsontext = JsonSerializer.Serialize<List<Ulam>>(ulamList, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            File.WriteAllText(JsonFilePath, jsontext);
         }
-
+        public void CreateUlam(Ulam ulam)
+        {
+            ulamList.Add(ulam);
+            ExportToJson();
+        }
         public int FindUlamIndex(Ulam UlamToFind)
         {
             for (int i = 0; i < ulamList.Count; i++)
@@ -52,13 +45,6 @@ namespace UlamRandomizerDataLogic
             }
             return -1;
         }
-        public void CreateUlam(Ulam ulam)
-        {
-            var newLine = $"{ulam.UlamName}|{ulam.MainIngredient}|{ulam.ulamDescription}";
-            File.AppendAllText(filepath, newLine);
-
-        }
-
         public List<Ulam> GetUlams()
         {
             return ulamList;
@@ -68,7 +54,7 @@ namespace UlamRandomizerDataLogic
         {
             int index = FindUlamIndex(ulam);
             ulamList.RemoveAt(index);
-            ExportToFile();
+            ExportToJson();
         }
 
         public void UpdateUlam(Ulam ulamEdit)
@@ -79,7 +65,6 @@ namespace UlamRandomizerDataLogic
             {
                 ulamList[index].ulamDescription = ulamEdit.ulamDescription;
             }
-
         }
     }
 }

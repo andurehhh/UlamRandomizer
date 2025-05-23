@@ -37,7 +37,10 @@ namespace UlamRandomizerBusinessLogic
             return rndUlamIndex;
         }
 
-        //helper methods
+        public static void EditUlam(Ulam newUlam)
+        {
+            DL.UpdateUlam(newUlam);
+        }
         public static Ulam CreateUlamObj(string name, string MainIngredient, string Description)
         {
             Ulam Newulam = new Ulam(name, MainIngredient, Description);
@@ -68,14 +71,6 @@ namespace UlamRandomizerBusinessLogic
         {
             return DL.GetUlams();
         }  
-        public static string GetUlamName(Ulam UlamNameToPrint)
-        {
-            return UlamNameToPrint.UlamName;
-        }
-        public static string GetUlamMainIng(Ulam UlamMainIngToPrint)
-        {
-            return UlamMainIngToPrint.MainIngredient;
-        }
         //public static void CreateDummyUlam()
         //{
         //    DataLogic.CreateDummyUlam();

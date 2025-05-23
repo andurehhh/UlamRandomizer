@@ -37,7 +37,7 @@ namespace UlamRandomizer
 
                     case 4:
 
-                        SearchUlamByName();
+                        DisplayEditUlam();
 
                         break;
 
@@ -130,16 +130,21 @@ namespace UlamRandomizer
         }
         private static void AskUlamToRemove()
         {
+
             Console.WriteLine("Enter the ulam you wish to remove:");
             string UlamName = Console.ReadLine();
+
+            Ulam ulamToDelete = BusinessLogic.SearchUlamList(UlamName);
             if (UlamName == "")
             {
                 Console.WriteLine("ERROR: Missing Ulam Input");
             }
             else
             {
-                if (BusinessLogic.IsInList(BusinessLogic.SearchUlamList(UlamName)))
+                if (BusinessLogic.IsInList(ulamToDelete))
                 {
+
+                    BusinessLogic.RemoveUlam(ulamToDelete);
                     Console.WriteLine($"Successfully removed {UlamName} from list.");
                 }
                 else
@@ -156,7 +161,7 @@ namespace UlamRandomizer
             {
                 Console.WriteLine(ulam.UlamName);
                 Console.WriteLine($"Main Ingredient: {ulam.MainIngredient}");
-                Console.WriteLine($"Description: {ulam.ulamDesciption}\n");
+                Console.WriteLine($"Description: {ulam.ulamDescription}\n");
             }
 
         }
@@ -214,20 +219,20 @@ namespace UlamRandomizer
 
         public static void ChosenFromRandom(Ulam SelectedRandomUlam)
         {
-            Console.WriteLine($"Ulam: {BusinessLogic.GetUlamName(SelectedRandomUlam)} \n" +
-                $"Main Ingredient: {BusinessLogic.GetUlamMainIng(SelectedRandomUlam)}");
+            Console.WriteLine($"Ulam: {SelectedRandomUlam.UlamName} \n" +
+                $"Main Ingredient: {SelectedRandomUlam.MainIngredient}");
 
         }
 
         public static void RemoveFromRandom(Ulam SelectedRandomUlam)
         {
             BusinessLogic.RemoveUlam(SelectedRandomUlam);
-            Console.WriteLine($"--Removed {BusinessLogic.GetUlamName(SelectedRandomUlam)}-- \n");
+            Console.WriteLine($"--Removed {SelectedRandomUlam.UlamName}-- \n");
 
         }
-        public static void SearchUlamByName()
+        public static void DisplayEditUlam()
         {
-            Console.WriteLine("Please enter the ulam to search for: ");
+            Console.WriteLine("Please enter the ulam to edit: ");
             string ulamToFind = Console.ReadLine();
             if (ulamToFind == "")
             {
@@ -239,11 +244,30 @@ namespace UlamRandomizer
             {
                 Console.WriteLine();
                 ChosenFromRandom(ulamFound);
+                EditUlam(ulamFound);
+
             }
             else
             {
                 Console.WriteLine("Ulam is not included in the list.");
             }
+        }
+
+        private static void EditUlam(Ulam ulamToEdit)
+        {
+            //Console.WriteLine($"Ulam to Edit:{ulamToEdit.UlamName}");
+            Ulam newUlam = ulamToEdit;
+            Console.WriteLine("Please enter new Main Ingredient:");
+
+            newUlam.MainIngredient = Console.ReadLine();
+            
+            Console.WriteLine("Please enter new Description: (Do not Enter for new Line)");
+            
+            newUlam.ulamDescription = Console.ReadLine();
+
+
+            BusinessLogic.EditUlam(newUlam);
+            Console.WriteLine("Ulam Successfully edited!");
         }
 
     }
