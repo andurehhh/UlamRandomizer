@@ -16,7 +16,8 @@ namespace UlamRandomizerDataLogic
 
             //ulamRandomizerDataLogic = new FileDataLogic();
             //ulamRandomizerDataLogic = new InMemoryDataLogic();
-            ulamRandomizerDataLogic = new JsonDataLogic();
+            //ulamRandomizerDataLogic = new JsonDataLogic();
+            ulamRandomizerDataLogic = new DBDataLogic();
         }
         public List<Ulam> GetUlams()
         {
