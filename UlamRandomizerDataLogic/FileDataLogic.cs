@@ -24,7 +24,7 @@ namespace UlamRandomizerDataLogic
                 var parts = line.Split('|');
 
                 ulamList.Add(new Ulam
-                    (parts[0], parts[1], parts[2])
+                    (parts[0], parts[1], parts[2], parts[3])
                     );
             }
         }
@@ -35,7 +35,7 @@ namespace UlamRandomizerDataLogic
 
             for (int i = 0; i < ulamList.Count; i++)
             {
-                UlamLines[i] = $"{ulamList[i].UlamName}|{ulamList[i].MainIngredient}";
+                UlamLines[i] = $"{ulamList[i].UlamName}|{ulamList[i].MainIngredient1}|{ulamList[i].MainIngredient2}";
             }
 
             File.WriteAllLines(filepath, UlamLines);
@@ -54,7 +54,7 @@ namespace UlamRandomizerDataLogic
         }
         public void CreateUlam(Ulam ulam)
         {
-            var newLine = $"{ulam.UlamName}|{ulam.MainIngredient}|{ulam.ulamDescription}";
+            var newLine = $"{ulam.UlamName}|{ulam.MainIngredient1}|{ulam.MainIngredient2}|{ulam.ulamDescription}";
             File.AppendAllText(filepath, newLine);
 
         }
@@ -74,7 +74,9 @@ namespace UlamRandomizerDataLogic
         public void UpdateUlam(Ulam ulamEdit)
         {
             int index = FindUlamIndex(ulamEdit);
-            ulamList[index].MainIngredient = ulamEdit.MainIngredient;
+            ulamList[index].MainIngredient1 = ulamEdit.MainIngredient1;
+            ulamList[index].MainIngredient2 = ulamEdit.MainIngredient2;
+
             if (ulamEdit.ulamDescription != "")
             {
                 ulamList[index].ulamDescription = ulamEdit.ulamDescription;

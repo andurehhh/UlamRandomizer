@@ -11,7 +11,7 @@ namespace UlamRandomizerDataLogic
     public class JsonDataLogic : IURDataLogic
     {
         List<Ulam> ulamList = new List<Ulam>();
-        string JsonFilePath = "ulam.json";
+        string JsonFilePath = "ulams.json";
 
         public JsonDataLogic()
         {
@@ -60,7 +60,9 @@ namespace UlamRandomizerDataLogic
         public void UpdateUlam(Ulam ulamEdit)
         {
             int index = FindUlamIndex(ulamEdit);
-            ulamList[index].MainIngredient = ulamEdit.MainIngredient;
+            ulamList[index].MainIngredient1 = ulamEdit.MainIngredient1;
+            ulamList[index].MainIngredient2 = ulamEdit.MainIngredient2;
+
             if (ulamEdit.ulamDescription != "")
             {
                 ulamList[index].ulamDescription = ulamEdit.ulamDescription;

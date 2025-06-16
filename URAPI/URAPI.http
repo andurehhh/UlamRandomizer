@@ -1,0 +1,6 @@
+@URAPI_HostAddress = http://localhost:5291
+
+GET {{URAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

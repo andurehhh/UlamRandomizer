@@ -10,21 +10,30 @@ namespace UlamRandomizerDataLogic
 {
     class DBDataLogic : IURDataLogic
     {
-        //static List<Ulam> ulamList;
-        //connectionstring 
         static string connectionString = "Data Source =NITROV\\SQLEXPRESS; Initial Catalog = DBUlamRandomizer; Integrated Security = True; TrustServerCertificate = True;";
 
         static SqlConnection sqlConnection;
 
         public DBDataLogic()
         {
-            //ulamList = new List<Ulam>();
             sqlConnection = new SqlConnection(connectionString);
 
         }
         public void CreateUlam(Ulam ulam)
         {
-            throw new NotImplementedException();
+            var insertStatement = "INSERT INTO tbl_ulamDetails VALUES (@UlamName,@MainIngredient1,@MainIngredient2,@ulamDescription)";
+
+            SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
+
+            insertCommand.Parameters.AddWithValue("@UlamName", ulam.UlamName);
+            insertCommand.Parameters.AddWithValue("@MainIngredient1", ulam.MainIngredient1);
+            insertCommand.Parameters.AddWithValue("@MainIngredient2", ulam.MainIngredient2);
+            insertCommand.Parameters.AddWithValue("@ulamDescription", ulam.ulamDescription);
+            sqlConnection.Open();
+
+            insertCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
         }
 
         public List<Ulam> GetUlams()
@@ -42,10 +51,9 @@ namespace UlamRandomizerDataLogic
                 ulamList.Add(new Ulam
                 {
                     UlamName = reader["UlamName"].ToString(),
-                    MainIngredient = reader["MainIngredient"].ToString(),
+                    MainIngredient1 = reader["MainIngredient1"].ToString(),
+                    MainIngredient2 = reader["MainIngredient2"].ToString(),
                     ulamDescription = reader["ulamDescription"].ToString(),
-                    isMarked = Convert.ToBoolean(reader["isMarked"].ToString())
-
                 }
                     );
             }
@@ -56,18 +64,27 @@ namespace UlamRandomizerDataLogic
 
         public void RemoveUlam(Ulam ulam)
         {
-            throw new NotImplementedException();
+
+            var deleteStatement = "DELETE FROM tbl_ulamDetails WHERE UlamName = @UlamName";
+            SqlCommand deleteCommand = new SqlCommand(deleteStatement, sqlConnection);
+            deleteCommand.Parameters.AddWithValue("@UlamName", ulam.UlamName);
+
+            sqlConnection.Open();
+            deleteCommand.ExecuteNonQuery();
+            sqlConnection.Close();
+
         }
 
         public void UpdateUlam(Ulam ulam)
         {
             sqlConnection.Open();
-            var updateStatement = $"UPDATE tbl_ulamDetails SET MainIngredient = @MainIngredient, ulamDescription = @ulamDescription WHERE UlamName = @UlamName";
+            var updateStatement = $"UPDATE tbl_ulamDetails SET MainIngredient1 = @MainIngredient1, ulamDescription = @ulamDescription WHERE UlamName = @UlamName";
 
             SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
 
             updateCommand.Parameters.AddWithValue("@UlamName", ulam.UlamName);
-            updateCommand.Parameters.AddWithValue("@MainIngredient", ulam.MainIngredient);
+            updateCommand.Parameters.AddWithValue("@MainIngredient1", ulam.MainIngredient1);
+            updateCommand.Parameters.AddWithValue("@MainIngredient2", ulam.MainIngredient2);
             updateCommand.Parameters.AddWithValue("@ulamDescription", ulam.ulamDescription);
             updateCommand.ExecuteNonQuery();
 

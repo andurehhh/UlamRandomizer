@@ -30,19 +30,22 @@
         {
             label1 = new Label();
             button1 = new Button();
-            button2 = new Button();
+            btnRandomize = new Button();
             button3 = new Button();
             button4 = new Button();
+            btnFavoritesList = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(324, 71);
+            label1.Font = new Font("Mongolian Baiti", 23F);
+            label1.Location = new Point(225, 42);
             label1.Name = "label1";
-            label1.Size = new Size(148, 20);
+            label1.Size = new Size(354, 41);
             label1.TabIndex = 0;
             label1.Text = "Welcome to anUlam!";
+            label1.TextAlign = ContentAlignment.TopCenter;
             label1.Click += label1_Click;
             // 
             // button1
@@ -55,18 +58,19 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // button2
+            // btnRandomize
             // 
-            button2.Location = new Point(324, 264);
-            button2.Name = "button2";
-            button2.Size = new Size(163, 29);
-            button2.TabIndex = 2;
-            button2.Text = "Randomize Ulam";
-            button2.UseVisualStyleBackColor = true;
+            btnRandomize.Location = new Point(324, 318);
+            btnRandomize.Name = "btnRandomize";
+            btnRandomize.Size = new Size(163, 71);
+            btnRandomize.TabIndex = 2;
+            btnRandomize.Text = "Randomize Ulam!";
+            btnRandomize.UseVisualStyleBackColor = true;
+            btnRandomize.Click += btnRandomize_Click;
             // 
             // button3
             // 
-            button3.Location = new Point(324, 215);
+            button3.Location = new Point(324, 211);
             button3.Name = "button3";
             button3.Size = new Size(163, 29);
             button3.TabIndex = 3;
@@ -76,21 +80,33 @@
             // 
             // button4
             // 
-            button4.Location = new Point(324, 165);
+            button4.Location = new Point(324, 153);
             button4.Name = "button4";
             button4.Size = new Size(163, 29);
             button4.TabIndex = 4;
             button4.Text = "Edit Ulam";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // btnFavoritesList
+            // 
+            btnFavoritesList.Location = new Point(324, 246);
+            btnFavoritesList.Name = "btnFavoritesList";
+            btnFavoritesList.Size = new Size(163, 29);
+            btnFavoritesList.TabIndex = 5;
+            btnFavoritesList.Text = "See Favorites";
+            btnFavoritesList.UseVisualStyleBackColor = true;
+            btnFavoritesList.Click += btnFavoritesList_Click;
             // 
             // frmMainMenu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 392);
+            ClientSize = new Size(800, 439);
+            Controls.Add(btnFavoritesList);
             Controls.Add(button4);
             Controls.Add(button3);
-            Controls.Add(button2);
+            Controls.Add(btnRandomize);
             Controls.Add(button1);
             Controls.Add(label1);
             Name = "frmMainMenu";
@@ -103,8 +119,9 @@
 
         private Label label1;
         private Button button1;
-        private Button button2;
+        private Button btnRandomize;
         private Button button3;
         private Button button4;
+        private Button btnFavoritesList;
     }
 }

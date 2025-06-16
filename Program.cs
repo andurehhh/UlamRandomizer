@@ -3,56 +3,66 @@ using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using UlamRandomizerBusinessLogic;
 using UlamCommon;
+using System.Diagnostics.Metrics;
 
 namespace UlamRandomizer
 {
     internal class Program
     {
+        static AccountBusinessLogic ABL = new AccountBusinessLogic();
+
         static void Main(string[] args)
         {
-            BusinessLogic BL = new BusinessLogic();
-            int optionChosen;
-            Console.WriteLine("Welcome to AnUlam!");
-            //BusinessLogic.CreateDummyUlam();
-            do
+            if (LoginMessage())
             {
-                DisplayActions();
-                optionChosen = GetUserInput();
 
-                switch (optionChosen)
+                BusinessLogic BL = new BusinessLogic();
+                int optionChosen;
+                Console.WriteLine($"Welcome to AnUlam {ABL.IdentifyAccountUser().FirstName}!");
+                do
                 {
-                    case 0:
-                        break;
-                    case 1:
-                        AddAnotherUlam();
-                        break;
+                    DisplayActions();
+                    optionChosen = GetUserInput();
 
-                    case 2:
-                        AskUlamToRemove();
-                        break;
+                    switch (optionChosen)
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            AddAnotherUlam();
+                            break;
 
-                    case 3:
-                        DisplayUlam();
-                        break;
+                        case 2:
+                            AskUlamToRemove();
+                            break;
 
-                    case 4:
+                        case 3:
+                            DisplayUlam();
+                            break;
 
-                        DisplayEditUlam();
+                        case 4:
 
-                        break;
+                            DisplayEditUlam();
 
-                    case 5:
+                            break;
 
-                        DisplayRandomUlam();
+                        case 5:
 
-                        break;
+                            DisplayRandomUlam();
 
-                    default:
-                        Console.WriteLine("Thank you for using our services!");
-                        break;
-                }
-            } while (optionChosen != 6);
+                            break;
 
+                        case 6:
+                            DisplayWholeList();
+                            break;
+
+                        default:
+                            Console.WriteLine("Thank you for using our services!");
+                            break;
+                    }
+                } while (optionChosen != 7);
+
+            }
         }
 
         private static int GetUserInput()
@@ -71,7 +81,7 @@ namespace UlamRandomizer
         }
         private static void DisplayActions()
         {
-            string[] options = { "[1] add Ulam", "[2] Remove Ulam", "[3] Display Ulam", "[4] Search an Ulam", "[5] Pick an Ulam!", "[6] Exit" };
+            string[] options = { "[1] add Ulam", "[2] Remove Ulam", "[3] Display Ulam", "[4] Search an Ulam", "[5] Pick an Ulam!", "[6] see whole list, [7] Exit" };
 
             Console.WriteLine("---------------------");
             foreach (string opt in options)
@@ -95,17 +105,19 @@ namespace UlamRandomizer
             Console.WriteLine("Enter the ulam to be added:");
             string UlamName = Console.ReadLine();
             Console.WriteLine("Enter the ulam's Main Ingredient:");
-            string MainIngredient = Console.ReadLine();
+            string MainIngredient1 = Console.ReadLine();
+            Console.WriteLine("Enter the ulam's 2nd Main Ingredient:");
+            string MainIngredient2 = Console.ReadLine();
             Console.WriteLine("Enter a short Description:");
             string Description = Console.ReadLine();
 
-            if (UlamName == "" || MainIngredient == "")
+            if (UlamName == "" || MainIngredient1 == "")
             {
                 Console.WriteLine("ERROR: Incomplete Input.");
             }
             else
             {
-                Ulam NewUlam = BusinessLogic.CreateUlamObj(UlamName, MainIngredient,Description);
+                Ulam NewUlam = BusinessLogic.CreateUlamObj(UlamName, MainIngredient1, MainIngredient2,Description);
 
                 if (!BusinessLogic.IsInList(NewUlam))
                 {
@@ -160,7 +172,8 @@ namespace UlamRandomizer
             foreach (Ulam ulam in BusinessLogic.GetUlams())
             {
                 Console.WriteLine(ulam.UlamName);
-                Console.WriteLine($"Main Ingredient: {ulam.MainIngredient}");
+                Console.WriteLine($"Main Ingredient 1: {ulam.MainIngredient1}");
+                Console.WriteLine($"Main Ingredient 2: {ulam.MainIngredient2}");
                 Console.WriteLine($"Description: {ulam.ulamDescription}\n");
             }
 
@@ -220,7 +233,8 @@ namespace UlamRandomizer
         public static void ChosenFromRandom(Ulam SelectedRandomUlam)
         {
             Console.WriteLine($"Ulam: {SelectedRandomUlam.UlamName} \n" +
-                $"Main Ingredient: {SelectedRandomUlam.MainIngredient}");
+                $"Main Ingredient1: {SelectedRandomUlam.MainIngredient1}"+
+                $"Main Ingredient1: {SelectedRandomUlam.MainIngredient1}");
 
         }
 
@@ -255,12 +269,15 @@ namespace UlamRandomizer
 
         private static void EditUlam(Ulam ulamToEdit)
         {
-            //Console.WriteLine($"Ulam to Edit:{ulamToEdit.UlamName}");
+
             Ulam newUlam = ulamToEdit;
             Console.WriteLine("Please enter new Main Ingredient:");
 
-            newUlam.MainIngredient = Console.ReadLine();
-            
+            newUlam.MainIngredient1 = Console.ReadLine();
+
+            Console.WriteLine("Enter the second Main Ingredient (leave blank if none.):");
+            newUlam.MainIngredient2 = Console.ReadLine();
+
             Console.WriteLine("Please enter new Description: (Do not Enter for new Line)");
             
             newUlam.ulamDescription = Console.ReadLine();
@@ -269,6 +286,49 @@ namespace UlamRandomizer
             BusinessLogic.EditUlam(newUlam);
             Console.WriteLine("Ulam Successfully edited!");
         }
+        private static bool LoginMessage()
+        {
+            bool retry = true;
+            do
+            {
+                Console.WriteLine("Please Enter your Username: ");
+                string user = Console.ReadLine();
+                Console.WriteLine("Password: ");
+                string pass = Console.ReadLine();
+                bool login = ABL.ConfirmLogin(user, pass);
 
+                if (login)
+                {
+                    Console.WriteLine("Login Successful!");
+                    return true;
+
+                }
+                else
+                {
+                    retry = false;
+                    Console.WriteLine("ERROR: Wrong username or Password");
+                }
+            } 
+            while (retry == false);
+            return false;
+        }
+
+        private static void DisplayWholeList()
+        {
+            Console.WriteLine("Here is the list of all available ulam.");
+            var ulamList = BusinessLogic.GetUlams();
+
+            Console.WriteLine("Here are the list of all ulam.");
+            int index = 1;
+            foreach (Ulam current in ulamList){
+                Console.WriteLine($"{index}. ");
+                Console.WriteLine($"Ulam Name: {current.UlamName}");
+                Console.WriteLine($"Main Ingredient 1: {current.MainIngredient1}");
+                Console.WriteLine($"Main Ingredient 2: {current.MainIngredient2}");
+                Console.WriteLine($"Ulam Description: {current.ulamDescription}");
+                index++;
+                Console.WriteLine(" ");
+            }
+        } 
     }
 }

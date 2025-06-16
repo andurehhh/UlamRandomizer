@@ -12,14 +12,17 @@
     <Compile Remove="UlamRandomizerDataLogic\**" />
     <Compile Remove="UlamRandomizerGUI\**" />
     <Compile Remove="Ulam\**" />
+    <Compile Remove="URAPI\**" />
     <EmbeddedResource Remove="UlamRandomizerBusinessLogic\**" />
     <EmbeddedResource Remove="UlamRandomizerDataLogic\**" />
     <EmbeddedResource Remove="UlamRandomizerGUI\**" />
     <EmbeddedResource Remove="Ulam\**" />
+    <EmbeddedResource Remove="URAPI\**" />
     <None Remove="UlamRandomizerBusinessLogic\**" />
     <None Remove="UlamRandomizerDataLogic\**" />
     <None Remove="UlamRandomizerGUI\**" />
     <None Remove="Ulam\**" />
+    <None Remove="URAPI\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -41,9 +41,9 @@ namespace UlamRandomizerBusinessLogic
         {
             DL.UpdateUlam(newUlam);
         }
-        public static Ulam CreateUlamObj(string name, string MainIngredient, string Description)
+        public static Ulam CreateUlamObj(string name, string MainIngredient1, string MainIngredient2, string Description)
         {
-            Ulam Newulam = new Ulam(name, MainIngredient, Description);
+            Ulam Newulam = new Ulam(name, MainIngredient1,MainIngredient2, Description);
             if (!IsInList(Newulam))
             {
                 DL.CreateUlam(Newulam);

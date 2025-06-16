@@ -9,20 +9,19 @@ namespace UlamCommon;
 public class Ulam
 {
     public string UlamName { get; set; }
-    public string MainIngredient { get; set; }
-    public bool isMarked { get; set; }
+    public string MainIngredient1 { get; set; }
+    public string MainIngredient2 { get; set; }
     public string ulamDescription { get; set; }
     
     public Ulam()
     {
-        isMarked = false;
     }
-    public Ulam(string UlamName, string MainIngredient, string ulamDescription)
+    public Ulam(string UlamName, string MainIngredient1, string MainIngredient2, string ulamDescription)
     {
         this.UlamName = UlamName;
-        this.MainIngredient = MainIngredient;
+        this.MainIngredient1 = MainIngredient1;
+        this.MainIngredient2 = MainIngredient2;
         this.ulamDescription = ulamDescription;
-        isMarked = false;
     }
 
 }
