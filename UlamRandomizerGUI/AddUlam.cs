@@ -14,8 +14,10 @@ namespace UlamRandomizerGUI
 {
     public partial class AddUlam : Form
     {
-        public AddUlam()
+        private Account curr;
+        public AddUlam(Account CurrentAccount)
         {
+            curr = CurrentAccount;
             InitializeComponent();
         }
 
@@ -25,7 +27,8 @@ namespace UlamRandomizerGUI
             try
             {
                 Ulam newUlam = BusinessLogic.CreateUlamObj(txtbUlamName.Text, txtbMainIngredient1.Text, txbMainIngredient2.Text, txtbDescription.Text);
-
+                int newUlamID=ABL.GetUlamID(newUlam);
+                ABL.AddCustomUlamToFavorite(curr.Id, newUlamID);
                 MessageBox.Show("Ulam Added Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)

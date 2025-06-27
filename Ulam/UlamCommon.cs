@@ -22,6 +22,7 @@ public class Ulam
     public string ImgString { get; set; }
     [JsonPropertyName("id")]
     public int Id { get; set; }
+    public string Type { get; set; }
     public Ulam()
     {
     }

@@ -47,16 +47,19 @@
             txbEmail = new TextBox();
             btnBack = new Button();
             label9 = new Label();
+            panel1 = new Panel();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // btnRegister
             // 
+            btnRegister.BackColor = Color.Wheat;
             btnRegister.Location = new Point(362, 352);
             btnRegister.Name = "btnRegister";
             btnRegister.Size = new Size(154, 40);
             btnRegister.TabIndex = 13;
             btnRegister.Text = "Register Here";
-            btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.UseVisualStyleBackColor = false;
             btnRegister.Click += button1_Click;
             // 
             // label3
@@ -167,6 +170,7 @@
             txbPass.Font = new Font("Microsoft Sans Serif", 10.2F);
             txbPass.Location = new Point(600, 217);
             txbPass.Name = "txbPass";
+            txbPass.PasswordChar = '*';
             txbPass.Size = new Size(276, 27);
             txbPass.TabIndex = 20;
             // 
@@ -185,6 +189,7 @@
             txbConfPass.Font = new Font("Microsoft Sans Serif", 10.2F);
             txbConfPass.Location = new Point(600, 272);
             txbConfPass.Name = "txbConfPass";
+            txbConfPass.PasswordChar = '*';
             txbConfPass.Size = new Size(276, 27);
             txbConfPass.TabIndex = 24;
             // 
@@ -208,30 +213,40 @@
             // 
             // btnBack
             // 
+            btnBack.BackColor = Color.Wheat;
             btnBack.Location = new Point(362, 398);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(154, 40);
             btnBack.TabIndex = 28;
             btnBack.Text = "Back to Menu";
-            btnBack.UseVisualStyleBackColor = true;
+            btnBack.UseVisualStyleBackColor = false;
             btnBack.Click += btnBack_Click;
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Mongolian Baiti", 22.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(54, 33);
+            label9.Location = new Point(29, 21);
             label9.Name = "label9";
             label9.Size = new Size(416, 40);
             label9.TabIndex = 29;
             label9.Text = "Let's Create your Account!";
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Orange;
+            panel1.Controls.Add(label9);
+            panel1.Location = new Point(2, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(900, 87);
+            panel1.TabIndex = 30;
+            // 
             // Register
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Honeydew;
             ClientSize = new Size(900, 518);
-            Controls.Add(label9);
             Controls.Add(btnBack);
             Controls.Add(label8);
             Controls.Add(txbEmail);
@@ -250,9 +265,12 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(txbLast);
+            Controls.Add(panel1);
             Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Name = "Register";
             Text = "Register";
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -278,5 +296,6 @@
         private TextBox txbEmail;
         private Button btnBack;
         private Label label9;
+        private Panel panel1;
     }
 }

@@ -37,7 +37,9 @@
             label1 = new Label();
             txtbSearch = new TextBox();
             btnSearch = new Button();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
@@ -76,9 +78,9 @@
             // 
             // btnBackToMenu
             // 
-            btnBackToMenu.BackColor = Color.Transparent;
+            btnBackToMenu.BackColor = Color.Wheat;
             btnBackToMenu.ForeColor = Color.Black;
-            btnBackToMenu.Location = new Point(40, 523);
+            btnBackToMenu.Location = new Point(40, 539);
             btnBackToMenu.Name = "btnBackToMenu";
             btnBackToMenu.Size = new Size(130, 54);
             btnBackToMenu.TabIndex = 25;
@@ -88,9 +90,9 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.Transparent;
+            button1.BackColor = Color.Wheat;
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(622, 523);
+            button1.Location = new Point(622, 539);
             button1.Name = "button1";
             button1.Size = new Size(130, 54);
             button1.TabIndex = 26;
@@ -100,9 +102,9 @@
             // 
             // btnAddUlam
             // 
-            btnAddUlam.BackColor = Color.Transparent;
+            btnAddUlam.BackColor = Color.Wheat;
             btnAddUlam.ForeColor = Color.Black;
-            btnAddUlam.Location = new Point(486, 523);
+            btnAddUlam.Location = new Point(486, 539);
             btnAddUlam.Name = "btnAddUlam";
             btnAddUlam.Size = new Size(130, 54);
             btnAddUlam.TabIndex = 27;
@@ -114,7 +116,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Mongolian Baiti", 23F);
-            label1.Location = new Point(40, 20);
+            label1.Location = new Point(40, 25);
             label1.Name = "label1";
             label1.Size = new Size(278, 41);
             label1.TabIndex = 33;
@@ -123,7 +125,7 @@
             // txtbSearch
             // 
             txtbSearch.Font = new Font("Segoe UI", 12F);
-            txtbSearch.Location = new Point(40, 76);
+            txtbSearch.Location = new Point(40, 74);
             txtbSearch.Name = "txtbSearch";
             txtbSearch.Size = new Size(584, 34);
             txtbSearch.TabIndex = 34;
@@ -132,7 +134,7 @@
             // 
             btnSearch.BackColor = Color.Transparent;
             btnSearch.ForeColor = Color.Black;
-            btnSearch.Location = new Point(630, 76);
+            btnSearch.Location = new Point(630, 69);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(122, 41);
             btnSearch.TabIndex = 35;
@@ -140,23 +142,34 @@
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Orange;
+            panel1.Controls.Add(btnSearch);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(txtbSearch);
+            panel1.Location = new Point(0, -5);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(802, 122);
+            panel1.TabIndex = 36;
+            // 
             // SearchUlam
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Honeydew;
             ClientSize = new Size(800, 628);
-            Controls.Add(btnSearch);
-            Controls.Add(txtbSearch);
-            Controls.Add(label1);
             Controls.Add(btnAddUlam);
             Controls.Add(button1);
             Controls.Add(btnBackToMenu);
             Controls.Add(dataGridView1);
+            Controls.Add(panel1);
             Name = "SearchUlam";
             Text = "DisplayUlam";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -170,5 +183,6 @@
         private Button btnSearch;
         private DataGridViewTextBoxColumn UlamID;
         private DataGridViewTextBoxColumn UlamName;
+        private Panel panel1;
     }
 }

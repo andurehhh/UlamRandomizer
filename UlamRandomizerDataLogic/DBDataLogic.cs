@@ -61,6 +61,30 @@ namespace UlamRandomizerDataLogic
             sqlConnection.Close();
             return ulamList;
         }
+        public Ulam GetSpecificUlam(int ulamID)
+        {
+            var selectStatement = "SELECT UlamName,MainIngredient1,MainIngredient2,UlamDescription,UlamPicture FROM tbl_ulamDetails WHERE UlamID = @UlamID";
+            SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
+            selectCommand.Parameters.AddWithValue("@UlamID", ulamID);
+            sqlConnection.Open();
+            Ulam ulam = null;
+
+            SqlDataReader reader = selectCommand.ExecuteReader();
+            if (reader.Read())
+            {
+                ulam = new Ulam
+                {
+                    Id = ulamID,
+                    UlamName = reader["UlamName"].ToString(),
+                    MainIngredient1 = reader["MainIngredient1"].ToString(),
+                    MainIngredient2 = reader["MainIngredient2"].ToString(),
+                    ulamDescription = reader["ulamDescription"].ToString(),
+                    ImgString = reader["ulamPicture"].ToString()
+                };
+            }
+            sqlConnection.Close();
+            return ulam;
+        }
 
         public void RemoveUlam(Ulam ulam)
         {

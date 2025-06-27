@@ -15,6 +15,7 @@ namespace UlamRandomizerGUI
     public partial class SearchUlam : Form
     {
         private Account curr;
+        private string Type = "API";
         public SearchUlam(Account currentUser)
         {
             InitializeComponent();
@@ -46,7 +47,7 @@ namespace UlamRandomizerGUI
 
         private void button3_Click(object sender, EventArgs e)
         {
-            AddUlam Add = new AddUlam();
+            AddUlam Add = new AddUlam(curr);
             Add.Show();
         }
 
@@ -63,11 +64,18 @@ namespace UlamRandomizerGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-            int selectedUlam = Convert.ToInt32(selectedRow.Cells["UlamID"].Value);
-            ViewUlam view = new ViewUlam(curr,selectedUlam);
+            try
+            {
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                int selectedUlam = Convert.ToInt32(selectedRow.Cells["UlamID"].Value);
+                ViewUlam view = new ViewUlam(curr, selectedUlam, Type);
 
-            view.Show();
+                view.Show();
+            } 
+            catch (ArgumentOutOfRangeException ex) 
+            {    
+                MessageBox.Show("Error: No Food Selected to View.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private async void btnSearch_Click(object sender, EventArgs e)
         {

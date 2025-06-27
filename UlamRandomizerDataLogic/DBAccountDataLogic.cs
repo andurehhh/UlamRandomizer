@@ -121,13 +121,30 @@ namespace UlamRandomizerDataLogic
 
         public void AddCustomUlamToFavorite(int accountID, int UlamID)
         {
-            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, apiID,UlamType,DateFavorite) VALUES (@accountID, @UlamID,'Custom', GETDATE())";
+            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, UlamID,UlamType,DateFavorite) VALUES (@accountID, @UlamID,'Custom', GETDATE())";
             SqlCommand insertCommand = new SqlCommand(InsertStatement, sqlconnection);
             insertCommand.Parameters.AddWithValue("@accountID", accountID);
             insertCommand.Parameters.AddWithValue("@UlamID", UlamID);
             sqlconnection.Open();
             insertCommand.ExecuteNonQuery();
             sqlconnection.Close();
+        }
+        public int GetCustomUlamID(Ulam UlamToFind)
+        {
+            var SelectStatement = "SELECT UlamId FROM tbl_UlamDetails WHERE ulamName = @UlamName";
+            SqlCommand SelectCommand = new SqlCommand(SelectStatement, sqlconnection);
+            SelectCommand.Parameters.AddWithValue("@UlamName", UlamToFind.UlamName);
+            sqlconnection.Open();
+            SqlDataReader read = SelectCommand.ExecuteReader();
+            while (read.Read()) 
+            {
+                int UlamID = Convert.ToInt32(read["UlamID"]);
+                sqlconnection.Close();
+                return UlamID;
+
+            }
+            return -1;
+
         }
         public void AddAPIToFavorite(int accountID, int UlamID)
         {
@@ -144,7 +161,7 @@ namespace UlamRandomizerDataLogic
         {
             List<Ulam> Favs = new List<Ulam>();
 
-            var SelectStatement = "SELECT ulamName,MainIngredient1,MainIngredient2,ulamDescription,ulamPicture FROM tbl_Favorites AS Fav INNER JOIN tbl_UlamDetails AS Ulam ON Fav.ulamID = Ulam.ulamID WHERE accountID = @accountID AND UlamType = 'Custom'";
+            var SelectStatement = "SELECT Fav.ulamID,ulamName,MainIngredient1,MainIngredient2,ulamDescription,ulamPicture, Fav.UlamType FROM tbl_Favorites AS Fav INNER JOIN tbl_UlamDetails AS Ulam ON Fav.ulamID = Ulam.ulamID WHERE accountID = @accountID AND UlamType = 'Custom'";
             SqlCommand SelectCommand = new SqlCommand(SelectStatement, sqlconnection);
             SelectCommand.Parameters.AddWithValue("@accountID", accountID);
             sqlconnection.Open();
@@ -153,12 +170,15 @@ namespace UlamRandomizerDataLogic
             {
                 Favs.Add(new Ulam
                 {
+                    Id = Convert.ToInt32(reader["ulamID"]),
                     UlamName = reader["UlamName"].ToString(),
                     MainIngredient1 = reader["MainIngredient1"].ToString(),
                     MainIngredient2 = reader["MainIngredient2"].ToString(),
                     ulamDescription = reader["ulamDescription"].ToString(),
-                    ImgString = reader["ulamPicture"].ToString()
-                });
+                    ImgString = reader["ulamPicture"].ToString(),
+                    Type = reader["UlamType"].ToString(),
+                }
+                );
             }
             sqlconnection.Close();
             return Favs;

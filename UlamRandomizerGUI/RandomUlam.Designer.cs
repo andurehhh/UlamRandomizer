@@ -35,15 +35,16 @@
             label2 = new Label();
             label4 = new Label();
             label5 = new Label();
-            txtbUlamName = new Label();
             btnMenu = new Button();
+            txtbUlamName = new TextBox();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(79, 277);
+            label1.Location = new Point(353, 278);
             label1.Name = "label1";
             label1.Size = new Size(91, 20);
             label1.TabIndex = 0;
@@ -51,9 +52,11 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Location = new Point(104, 33);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(597, 223);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 2;
             pictureBox1.TabStop = false;
             // 
@@ -84,7 +87,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(79, 372);
+            label2.Location = new Point(341, 372);
             label2.Name = "label2";
             label2.Size = new Size(123, 20);
             label2.TabIndex = 6;
@@ -95,7 +98,7 @@
             label4.AutoSize = true;
             label4.BorderStyle = BorderStyle.Fixed3D;
             label4.Font = new Font("Sitka Banner", 13.7999992F);
-            label4.Location = new Point(91, 413);
+            label4.Location = new Point(178, 404);
             label4.Name = "label4";
             label4.Size = new Size(114, 35);
             label4.TabIndex = 8;
@@ -106,22 +109,11 @@
             label5.AutoSize = true;
             label5.BorderStyle = BorderStyle.Fixed3D;
             label5.Font = new Font("Sitka Banner", 13.7999992F);
-            label5.Location = new Point(236, 413);
+            label5.Location = new Point(489, 404);
             label5.Name = "label5";
             label5.Size = new Size(117, 35);
             label5.TabIndex = 9;
             label5.Text = "Ingredient2";
-            // 
-            // txtbUlamName
-            // 
-            txtbUlamName.AutoSize = true;
-            txtbUlamName.BorderStyle = BorderStyle.Fixed3D;
-            txtbUlamName.Font = new Font("Sitka Banner", 16.1999989F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtbUlamName.Location = new Point(91, 312);
-            txtbUlamName.Name = "txtbUlamName";
-            txtbUlamName.Size = new Size(79, 41);
-            txtbUlamName.TabIndex = 11;
-            txtbUlamName.Text = "Name";
             // 
             // btnMenu
             // 
@@ -133,14 +125,34 @@
             btnMenu.TabIndex = 12;
             btnMenu.Text = "Back to Menu";
             btnMenu.UseVisualStyleBackColor = false;
+            btnMenu.Click += btnMenu_Click;
+            // 
+            // txtbUlamName
+            // 
+            txtbUlamName.Font = new Font("Sitka Banner", 16.1999989F);
+            txtbUlamName.Location = new Point(104, 312);
+            txtbUlamName.Multiline = true;
+            txtbUlamName.Name = "txtbUlamName";
+            txtbUlamName.ReadOnly = true;
+            txtbUlamName.Size = new Size(610, 57);
+            txtbUlamName.TabIndex = 13;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Orange;
+            panel1.Location = new Point(91, 22);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(623, 245);
+            panel1.TabIndex = 14;
             // 
             // RandomUlam
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Honeydew;
             ClientSize = new Size(800, 628);
-            Controls.Add(btnMenu);
             Controls.Add(txtbUlamName);
+            Controls.Add(btnMenu);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label2);
@@ -148,6 +160,7 @@
             Controls.Add(button1);
             Controls.Add(pictureBox1);
             Controls.Add(label1);
+            Controls.Add(panel1);
             Name = "RandomUlam";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -164,7 +177,8 @@
         private Label label2;
         private Label label4;
         private Label label5;
-        private Label txtbUlamName;
         private Button btnMenu;
+        private TextBox txtbUlamName;
+        private Panel panel1;
     }
 }

@@ -18,11 +18,13 @@ namespace UlamRandomizerGUI
         private Account curr;
         private Ulam UlamSelected;
         private int selectedID;
-        public ViewUlam(Account CurrentUser, int index)
+        private string TypeUlam;
+        public ViewUlam(Account CurrentUser, int index, string Type)
         {
             InitializeComponent();
             curr = CurrentUser;
             selectedID = index;
+            TypeUlam = Type;
             DisplayUlamDetails();
 
         }
@@ -30,12 +32,33 @@ namespace UlamRandomizerGUI
         {
             if (selectedID != null)
             {
-                UlamSelected = await SpoonacularBL.GetUlamInfo(SpoonacularBL.sharedClient, selectedID);
-                if (UlamSelected != null)
+                if (TypeUlam.Trim().Equals("API"))
                 {
+                    UlamSelected = await SpoonacularBL.GetUlamInfo(SpoonacularBL.sharedClient, selectedID);
+                    if (UlamSelected != null)
+                    {
+                        txtbUlamName.Text = UlamSelected.UlamName;
+                        txbDescription.Text = BusinessLogic.StripHtmlTags(UlamSelected.ulamDescription);
+                        pictureBox1.LoadAsync(UlamSelected.ImgString);
+                    }
+                }
+                else
+                {
+
+                    BusinessLogic ABL = new BusinessLogic();
+                    UlamSelected = ABL.GetUlambyID(selectedID);
+
                     txtbUlamName.Text = UlamSelected.UlamName;
                     txbDescription.Text = BusinessLogic.StripHtmlTags(UlamSelected.ulamDescription);
+                    txtbIngredient1.Text = UlamSelected.MainIngredient1;
+                    txtbIngredient2.Text = UlamSelected.MainIngredient2;
+
                 }
+
+            }
+            else
+            {
+                MessageBox.Show("No Ulam selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -54,7 +77,7 @@ namespace UlamRandomizerGUI
             AccountBusinessLogic ABL = new AccountBusinessLogic();
             try
             {
-                if (ABL.DoesFavoriteExist(curr.Id, selectedID))
+                if (!ABL.DoesFavoriteExist(curr.Id, selectedID))
                 {
                     ABL.AddAPIUlamToFavorite(curr.Id, selectedID);
                     MessageBox.Show("Ulam added to favorites successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -73,6 +96,11 @@ namespace UlamRandomizerGUI
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
+        {
+            Dispose();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

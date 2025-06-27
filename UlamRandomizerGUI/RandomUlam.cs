@@ -16,6 +16,7 @@ namespace UlamRandomizerGUI
     {
         private Account curr;
         private int selectedID;
+        private string Type = "API";
         public RandomUlam(Account CurrentUser)
         {
             InitializeComponent();
@@ -29,8 +30,7 @@ namespace UlamRandomizerGUI
             if (RandomUlam != null)
             {
                 txtbUlamName.Text = RandomUlam.UlamName;
-                // Assuming you have a method to display the image
-                // DisplayImage(RandomUlam.ImageUrl);
+                pictureBox1.LoadAsync(RandomUlam.ImgString);
                 selectedID = Convert.ToInt32(RandomUlam.Id);
             }
             else
@@ -45,7 +45,7 @@ namespace UlamRandomizerGUI
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ViewUlam view = new ViewUlam(curr,selectedID);
+            ViewUlam view = new ViewUlam(curr, selectedID, Type);
             view.Show();
         }
 
@@ -53,6 +53,11 @@ namespace UlamRandomizerGUI
         {
             txtbUlamName.Text = string.Empty;
             RandomizeUlam();
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            Dispose();
         }
     }
 }

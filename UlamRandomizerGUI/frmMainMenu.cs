@@ -24,7 +24,7 @@ namespace UlamRandomizerGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddUlam Add = new AddUlam();
+            AddUlam Add = new AddUlam(curr);
             Add.Show();
         }
 
@@ -43,7 +43,7 @@ namespace UlamRandomizerGUI
         {
             FavoritesList fav = new FavoritesList(curr);
             fav.Show();
-            this.Hide();
+            //this.Hide();
         }
     }
 }

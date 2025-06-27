@@ -35,7 +35,6 @@
             label2 = new Label();
             pictureBox1 = new PictureBox();
             label1 = new Label();
-            button1 = new Button();
             btnAddToFav = new Button();
             lblDescription = new Label();
             txtbUlamName = new TextBox();
@@ -44,13 +43,13 @@
             // 
             // btnMenu
             // 
-            btnMenu.BackColor = Color.Transparent;
+            btnMenu.BackColor = Color.Wheat;
             btnMenu.ForeColor = Color.Black;
             btnMenu.Location = new Point(39, 551);
             btnMenu.Name = "btnMenu";
             btnMenu.Size = new Size(127, 43);
             btnMenu.TabIndex = 23;
-            btnMenu.Text = "Back to Menu";
+            btnMenu.Text = "Back";
             btnMenu.UseVisualStyleBackColor = false;
             btnMenu.Click += btnMenu_Click;
             // 
@@ -62,7 +61,7 @@
             txbDescription.Multiline = true;
             txbDescription.Name = "txbDescription";
             txbDescription.ReadOnly = true;
-            txbDescription.ScrollBars = ScrollBars.Horizontal;
+            txbDescription.ScrollBars = ScrollBars.Vertical;
             txbDescription.Size = new Size(583, 185);
             txbDescription.TabIndex = 21;
             // 
@@ -93,45 +92,38 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Tahoma", 9F);
             label2.Location = new Point(436, 143);
             label2.Name = "label2";
-            label2.Size = new Size(123, 20);
+            label2.Size = new Size(121, 18);
             label2.TabIndex = 18;
             label2.Text = "Main Ingredients:";
             // 
             // pictureBox1
             // 
+            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Location = new Point(39, 37);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(395, 213);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 14;
             pictureBox1.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Tahoma", 9F);
             label1.Location = new Point(435, 53);
             label1.Name = "label1";
-            label1.Size = new Size(91, 20);
+            label1.Size = new Size(90, 18);
             label1.TabIndex = 13;
             label1.Text = "Ulam Name:";
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.Transparent;
-            button1.ForeColor = Color.Black;
-            button1.Location = new Point(172, 551);
-            button1.Name = "button1";
-            button1.Size = new Size(127, 43);
-            button1.TabIndex = 26;
-            button1.Text = "Back to Search";
-            button1.UseVisualStyleBackColor = false;
             // 
             // btnAddToFav
             // 
             btnAddToFav.BackColor = Color.YellowGreen;
             btnAddToFav.ForeColor = Color.DarkGreen;
-            btnAddToFav.Location = new Point(469, 529);
+            btnAddToFav.Location = new Point(468, 539);
             btnAddToFav.Name = "btnAddToFav";
             btnAddToFav.Size = new Size(163, 55);
             btnAddToFav.TabIndex = 27;
@@ -142,9 +134,10 @@
             // lblDescription
             // 
             lblDescription.AutoSize = true;
+            lblDescription.Font = new Font("Tahoma", 9F);
             lblDescription.Location = new Point(39, 297);
             lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(88, 20);
+            lblDescription.Size = new Size(83, 18);
             lblDescription.TabIndex = 28;
             lblDescription.Text = "Description:";
             // 
@@ -165,11 +158,11 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Honeydew;
             ClientSize = new Size(688, 628);
             Controls.Add(txtbUlamName);
             Controls.Add(lblDescription);
             Controls.Add(btnAddToFav);
-            Controls.Add(button1);
             Controls.Add(btnMenu);
             Controls.Add(txbDescription);
             Controls.Add(txtbIngredient2);
@@ -193,7 +186,6 @@
         private Label label2;
         private PictureBox pictureBox1;
         private Label label1;
-        private Button button1;
         private Button btnAddToFav;
         private Label lblDescription;
         private TextBox txtbUlamName;

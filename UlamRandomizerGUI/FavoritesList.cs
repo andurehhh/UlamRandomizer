@@ -27,15 +27,16 @@ namespace UlamRandomizerGUI
         private void button1_Click(object sender, EventArgs e)
         {
             DataGridViewRow selectedRow = dgFavorites.SelectedRows[0];
+            string TypeUlam = selectedRow.Cells["Type"].Value.ToString();
             int ulamSelected = Convert.ToInt32(selectedRow.Cells["Id"].Value);
-            ViewUlam view = new ViewUlam(curr, ulamSelected);
+            ViewFromFav view = new ViewFromFav(curr, ulamSelected,TypeUlam);
             view.Show();
 
         }
 
         private void btnBackToMenu_Click(object sender, EventArgs e)
         {
-            Dispose();
+            this.Close();
         }
         private async void LoadFavorites()
         {
@@ -53,6 +54,7 @@ namespace UlamRandomizerGUI
             {
                 ABL.RemoveFavorite(curr.Id, Convert.ToInt32(dgFavorites.SelectedRows[0].Cells["Id"].Value));
                 MessageBox.Show("Ulam removed from favorites successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadFavorites();
             }
             catch (Exception)
             {

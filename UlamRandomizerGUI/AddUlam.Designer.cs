@@ -57,24 +57,26 @@
             // label3
             // 
             label3.AutoSize = true;
+            label3.Font = new Font("Tahoma", 9F);
             label3.Location = new Point(29, 286);
             label3.Name = "label3";
-            label3.Size = new Size(88, 20);
+            label3.Size = new Size(83, 18);
             label3.TabIndex = 17;
             label3.Text = "Description:";
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Tahoma", 9F);
             label2.Location = new Point(440, 125);
             label2.Name = "label2";
-            label2.Size = new Size(117, 20);
+            label2.Size = new Size(114, 18);
             label2.TabIndex = 16;
             label2.Text = "Main Ingredient:";
             // 
             // btnAdd
             // 
-            btnAdd.BackColor = Color.Transparent;
+            btnAdd.BackColor = Color.Wheat;
             btnAdd.ForeColor = Color.Black;
             btnAdd.Location = new Point(693, 536);
             btnAdd.Name = "btnAdd";
@@ -97,15 +99,16 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Tahoma", 9F);
             label1.Location = new Point(440, 50);
             label1.Name = "label1";
-            label1.Size = new Size(91, 20);
+            label1.Size = new Size(90, 18);
             label1.TabIndex = 11;
             label1.Text = "Ulam Name:";
             // 
             // btnAddPic
             // 
-            btnAddPic.BackColor = Color.Transparent;
+            btnAddPic.BackColor = Color.Wheat;
             btnAddPic.ForeColor = Color.Black;
             btnAddPic.Location = new Point(324, 207);
             btnAddPic.Name = "btnAddPic";
@@ -134,7 +137,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.BackColor = Color.Transparent;
+            btnCancel.BackColor = Color.Wheat;
             btnCancel.ForeColor = Color.Black;
             btnCancel.Location = new Point(29, 551);
             btnCancel.Name = "btnCancel";
@@ -146,7 +149,7 @@
             // 
             // btnClear
             // 
-            btnClear.BackColor = Color.Transparent;
+            btnClear.BackColor = Color.Wheat;
             btnClear.ForeColor = Color.Black;
             btnClear.Location = new Point(562, 536);
             btnClear.Name = "btnClear";
@@ -167,9 +170,10 @@
             // label4
             // 
             label4.AutoSize = true;
+            label4.Font = new Font("Tahoma", 9F);
             label4.Location = new Point(440, 181);
             label4.Name = "label4";
-            label4.Size = new Size(129, 20);
+            label4.Size = new Size(127, 18);
             label4.TabIndex = 26;
             label4.Text = "Main Ingredient 2:";
             // 
@@ -177,6 +181,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Honeydew;
             ClientSize = new Size(867, 628);
             Controls.Add(txbMainIngredient2);
             Controls.Add(label4);

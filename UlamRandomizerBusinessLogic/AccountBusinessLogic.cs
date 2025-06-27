@@ -70,7 +70,9 @@ namespace UlamRandomizerBusinessLogic
             List<int> apilist = AccountLogic.GetAPIList(accountID);
             foreach (var item in apilist)
             {
-                apiUlams.Add(await SpoonacularBL.GetUlamInfo(SpoonacularBL.sharedClient,item));
+                Ulam newUlam = await SpoonacularBL.GetUlamInfo(SpoonacularBL.sharedClient, item);
+                newUlam.Type = string.Format("API");
+                apiUlams.Add(newUlam);
             }
             return apiUlams;
         }
@@ -82,6 +84,11 @@ namespace UlamRandomizerBusinessLogic
         {
             AccountLogic.RemoveFavorite(accountID, ulamID);
         }
+        public int GetUlamID(Ulam UlamToFind) 
+        {
+            return AccountLogic.GetCustomUlamID(UlamToFind);
+        }
+
     }
 
 }

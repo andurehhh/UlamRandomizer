@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UlamRandomizerBusinessLogic;
 
 namespace UlamRandomizerGUI
 {
@@ -24,17 +25,30 @@ namespace UlamRandomizerGUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string FirstName = txbFirst.ToString();
-            string LastName = txbLast.ToString();
-            string Gender = cmbGender.ToString();
-            DateTime Birthday = dtpBirthday.Value;
+            AccountBusinessLogic ABL = new AccountBusinessLogic();
+            string FirstName = txbFirst.Text.ToString();
+            string LastName = txbLast.Text.ToString();
+            string Gender = cmbGender.Text.ToString();
+            DateOnly Birthday = DateOnly.FromDateTime(dtpBirthday.Value);
 
-            string Username = txbUser.ToString();
-            string email = txbEmail.ToString();
+            string Username = txbUser.Text.ToString();
+            string email = txbEmail.Text.ToString();
             string password;
             if (txbPass.Text.Equals(txbConfPass.Text))
             {
-                password = txbPass.ToString();
+                password = txbPass.Text.ToString();
+
+                try
+                {
+                    ABL.AddAccount(Username, password, email, FirstName, LastName, Gender, Birthday);
+                    MessageBox.Show("Account Created Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             else
             {

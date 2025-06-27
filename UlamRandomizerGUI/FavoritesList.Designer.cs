@@ -35,14 +35,17 @@
             dgFavorites = new DataGridView();
             Id = new DataGridViewTextBoxColumn();
             UlamNameColumn = new DataGridViewTextBoxColumn();
+            Type = new DataGridViewTextBoxColumn();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dgFavorites).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // btnBackToMenu
             // 
-            btnBackToMenu.BackColor = Color.Transparent;
+            btnBackToMenu.BackColor = Color.Wheat;
             btnBackToMenu.ForeColor = Color.Black;
-            btnBackToMenu.Location = new Point(42, 490);
+            btnBackToMenu.Location = new Point(42, 518);
             btnBackToMenu.Name = "btnBackToMenu";
             btnBackToMenu.Size = new Size(130, 54);
             btnBackToMenu.TabIndex = 29;
@@ -52,9 +55,9 @@
             // 
             // btnRemoveUlam
             // 
-            btnRemoveUlam.BackColor = Color.Transparent;
+            btnRemoveUlam.BackColor = Color.Wheat;
             btnRemoveUlam.ForeColor = Color.Black;
-            btnRemoveUlam.Location = new Point(488, 490);
+            btnRemoveUlam.Location = new Point(488, 518);
             btnRemoveUlam.Name = "btnRemoveUlam";
             btnRemoveUlam.Size = new Size(130, 54);
             btnRemoveUlam.TabIndex = 31;
@@ -64,9 +67,9 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.Transparent;
+            button1.BackColor = Color.Wheat;
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(624, 490);
+            button1.Location = new Point(624, 518);
             button1.Name = "button1";
             button1.Size = new Size(130, 54);
             button1.TabIndex = 30;
@@ -78,7 +81,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Mongolian Baiti", 23F);
-            label1.Location = new Point(298, 12);
+            label1.Location = new Point(323, 19);
             label1.Name = "label1";
             label1.Size = new Size(164, 41);
             label1.TabIndex = 32;
@@ -89,7 +92,7 @@
             dgFavorites.AllowUserToAddRows = false;
             dgFavorites.AllowUserToDeleteRows = false;
             dgFavorites.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgFavorites.Columns.AddRange(new DataGridViewColumn[] { Id, UlamNameColumn });
+            dgFavorites.Columns.AddRange(new DataGridViewColumn[] { Id, UlamNameColumn, Type });
             dgFavorites.Location = new Point(42, 107);
             dgFavorites.Name = "dgFavorites";
             dgFavorites.ReadOnly = true;
@@ -117,22 +120,42 @@
             UlamNameColumn.Name = "UlamNameColumn";
             UlamNameColumn.ReadOnly = true;
             // 
+            // Type
+            // 
+            Type.DataPropertyName = "Type";
+            Type.HeaderText = "Ulam Origin";
+            Type.MinimumWidth = 6;
+            Type.Name = "Type";
+            Type.ReadOnly = true;
+            Type.Width = 125;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Orange;
+            panel1.Controls.Add(label1);
+            panel1.Location = new Point(2, 2);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(796, 82);
+            panel1.TabIndex = 34;
+            // 
             // FavoritesList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
+            BackColor = Color.Honeydew;
             ClientSize = new Size(800, 628);
             Controls.Add(dgFavorites);
-            Controls.Add(label1);
             Controls.Add(btnBackToMenu);
             Controls.Add(btnRemoveUlam);
             Controls.Add(button1);
+            Controls.Add(panel1);
             Name = "FavoritesList";
             Text = "FavoritesList";
             ((System.ComponentModel.ISupportInitialize)dgFavorites).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -144,5 +167,7 @@
         private DataGridView dgFavorites;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn UlamNameColumn;
+        private DataGridViewTextBoxColumn Type;
+        private Panel panel1;
     }
 }

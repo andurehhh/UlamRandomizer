@@ -57,7 +57,7 @@ namespace UlamRandomizerBusinessLogic
         }
         public static async Task<Ulam> GenerateRandomUlam(HttpClient httpClient)
         {
-            var response = await httpClient.GetFromJsonAsync<RandomRecipeResponse>($"recipes/random?number=1&apiKey={key}");
+            var response = await httpClient.GetFromJsonAsync<RandomRecipeResponse>($"recipes/random?number=1&include-tags=lunch,dinner&exclude-tags=dessert&apiKey={key}");
             if (response == null)
             {
                 throw new InvalidOperationException("Failed to generate a random Ulam.");
