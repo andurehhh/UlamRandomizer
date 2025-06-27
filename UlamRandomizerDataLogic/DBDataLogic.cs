@@ -8,7 +8,7 @@ using Microsoft.Data.Sql;
 using Microsoft.Data.SqlClient;
 namespace UlamRandomizerDataLogic
 {
-    class DBDataLogic : IURDataLogic
+    public class DBDataLogic : IURDataLogic
     {
         static string connectionString = "Data Source =NITROV\\SQLEXPRESS; Initial Catalog = DBUlamRandomizer; Integrated Security = True; TrustServerCertificate = True;";
 
@@ -21,7 +21,7 @@ namespace UlamRandomizerDataLogic
         }
         public void CreateUlam(Ulam ulam)
         {
-            var insertStatement = "INSERT INTO tbl_ulamDetails VALUES (@UlamName,@MainIngredient1,@MainIngredient2,@ulamDescription)";
+            var insertStatement = "INSERT INTO tbl_ulamDetails(ulamName,MainIngredient1,MainIngredient2,ulamDescription) VALUES (@UlamName,@MainIngredient1,@MainIngredient2,@ulamDescription)";
 
             SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
 
@@ -78,7 +78,7 @@ namespace UlamRandomizerDataLogic
         public void UpdateUlam(Ulam ulam)
         {
             sqlConnection.Open();
-            var updateStatement = $"UPDATE tbl_ulamDetails SET MainIngredient1 = @MainIngredient1, ulamDescription = @ulamDescription WHERE UlamName = @UlamName";
+            var updateStatement = $"UPDATE tbl_ulamDetails SET MainIngredient1 = @MainIngredient1, MainIngredient2 = @MainIngredient2 ulamDescription = @ulamDescription WHERE UlamName = @UlamName";
 
             SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
 
@@ -90,5 +90,6 @@ namespace UlamRandomizerDataLogic
 
             sqlConnection.Close();
         }
+        
     }
 }

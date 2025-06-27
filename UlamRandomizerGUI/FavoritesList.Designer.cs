@@ -29,80 +29,50 @@
         private void InitializeComponent()
         {
             btnBackToMenu = new Button();
-            dataGridView1 = new DataGridView();
-            UlamNameColumn = new DataGridViewTextBoxColumn();
-            MainIngredientColumn = new DataGridViewTextBoxColumn();
-            DescriptionColumn = new DataGridViewTextBoxColumn();
-            btnAddUlam = new Button();
+            btnRemoveUlam = new Button();
             button1 = new Button();
             label1 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            dgFavorites = new DataGridView();
+            Id = new DataGridViewTextBoxColumn();
+            UlamNameColumn = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgFavorites).BeginInit();
             SuspendLayout();
             // 
             // btnBackToMenu
             // 
             btnBackToMenu.BackColor = Color.Transparent;
             btnBackToMenu.ForeColor = Color.Black;
-            btnBackToMenu.Location = new Point(44, 348);
+            btnBackToMenu.Location = new Point(42, 490);
             btnBackToMenu.Name = "btnBackToMenu";
             btnBackToMenu.Size = new Size(130, 54);
             btnBackToMenu.TabIndex = 29;
             btnBackToMenu.Text = "Back to Menu";
             btnBackToMenu.UseVisualStyleBackColor = false;
+            btnBackToMenu.Click += btnBackToMenu_Click;
             // 
-            // dataGridView1
+            // btnRemoveUlam
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { UlamNameColumn, MainIngredientColumn, DescriptionColumn });
-            dataGridView1.Enabled = false;
-            dataGridView1.Location = new Point(44, 68);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(712, 274);
-            dataGridView1.TabIndex = 28;
-            // 
-            // UlamNameColumn
-            // 
-            UlamNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            UlamNameColumn.HeaderText = "Ulam Name";
-            UlamNameColumn.MinimumWidth = 6;
-            UlamNameColumn.Name = "UlamNameColumn";
-            // 
-            // MainIngredientColumn
-            // 
-            MainIngredientColumn.HeaderText = "Main Ingredient";
-            MainIngredientColumn.MinimumWidth = 6;
-            MainIngredientColumn.Name = "MainIngredientColumn";
-            MainIngredientColumn.Width = 125;
-            // 
-            // DescriptionColumn
-            // 
-            DescriptionColumn.HeaderText = "Description";
-            DescriptionColumn.MinimumWidth = 6;
-            DescriptionColumn.Name = "DescriptionColumn";
-            DescriptionColumn.Width = 125;
-            // 
-            // btnAddUlam
-            // 
-            btnAddUlam.BackColor = Color.Transparent;
-            btnAddUlam.ForeColor = Color.Black;
-            btnAddUlam.Location = new Point(490, 348);
-            btnAddUlam.Name = "btnAddUlam";
-            btnAddUlam.Size = new Size(130, 54);
-            btnAddUlam.TabIndex = 31;
-            btnAddUlam.Text = "Remove from Favorites";
-            btnAddUlam.UseVisualStyleBackColor = false;
+            btnRemoveUlam.BackColor = Color.Transparent;
+            btnRemoveUlam.ForeColor = Color.Black;
+            btnRemoveUlam.Location = new Point(488, 490);
+            btnRemoveUlam.Name = "btnRemoveUlam";
+            btnRemoveUlam.Size = new Size(130, 54);
+            btnRemoveUlam.TabIndex = 31;
+            btnRemoveUlam.Text = "Remove from Favorites";
+            btnRemoveUlam.UseVisualStyleBackColor = false;
+            btnRemoveUlam.Click += btnRemoveUlam_Click;
             // 
             // button1
             // 
             button1.BackColor = Color.Transparent;
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(626, 348);
+            button1.Location = new Point(624, 490);
             button1.Name = "button1";
             button1.Size = new Size(130, 54);
             button1.TabIndex = 30;
             button1.Text = "View Ulam";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label1
             // 
@@ -114,20 +84,53 @@
             label1.TabIndex = 32;
             label1.Text = "Favorites";
             // 
+            // dgFavorites
+            // 
+            dgFavorites.AllowUserToAddRows = false;
+            dgFavorites.AllowUserToDeleteRows = false;
+            dgFavorites.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgFavorites.Columns.AddRange(new DataGridViewColumn[] { Id, UlamNameColumn });
+            dgFavorites.Location = new Point(42, 107);
+            dgFavorites.Name = "dgFavorites";
+            dgFavorites.ReadOnly = true;
+            dgFavorites.RowHeadersWidth = 51;
+            dgFavorites.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgFavorites.Size = new Size(712, 377);
+            dgFavorites.TabIndex = 33;
+            // 
+            // Id
+            // 
+            Id.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Ulam ID";
+            Id.MinimumWidth = 6;
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Width = 125;
+            // 
+            // UlamNameColumn
+            // 
+            UlamNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            UlamNameColumn.DataPropertyName = "UlamName";
+            UlamNameColumn.HeaderText = "Ulam Name";
+            UlamNameColumn.MinimumWidth = 6;
+            UlamNameColumn.Name = "UlamNameColumn";
+            UlamNameColumn.ReadOnly = true;
+            // 
             // FavoritesList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 628);
+            Controls.Add(dgFavorites);
             Controls.Add(label1);
             Controls.Add(btnBackToMenu);
-            Controls.Add(dataGridView1);
-            Controls.Add(btnAddUlam);
+            Controls.Add(btnRemoveUlam);
             Controls.Add(button1);
             Name = "FavoritesList";
             Text = "FavoritesList";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgFavorites).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -135,12 +138,11 @@
         #endregion
 
         private Button btnBackToMenu;
-        private DataGridView dataGridView1;
-        private Button btnAddUlam;
+        private Button btnRemoveUlam;
         private Button button1;
         private Label label1;
+        private DataGridView dgFavorites;
+        private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn UlamNameColumn;
-        private DataGridViewTextBoxColumn MainIngredientColumn;
-        private DataGridViewTextBoxColumn DescriptionColumn;
     }
 }

@@ -43,14 +43,9 @@ namespace UlamRandomizerDataLogic
             return creds;
         }
 
-        //public List<Ulam> GetFavorites()
-        //{
-        //    return List < Ulam > newList;
-        //}
-
         public Account IdentifyUser(int AccountID)
         {
-            var FindUser = "SELECT Username,Password,FirstName,LastName,Gender,Birthday from tbl_AccountCredentials as ac LEFT JOIN tbl_AccountDetails as ad ON ac.AccountID = ad.AccountID WHERE ac.accountID = @accountID";
+            var FindUser = "SELECT ac.AccountID, Username,Password,FirstName,LastName,Gender,Birthday from tbl_AccountCredentials as ac LEFT JOIN tbl_AccountDetails as ad ON ac.AccountID = ad.AccountID WHERE ac.accountID = @accountID";
             SqlCommand FindUserCommand = new SqlCommand(FindUser, sqlconnection);
             FindUserCommand.Parameters.AddWithValue("@accountID", AccountID);
             sqlconnection.Open();
@@ -58,14 +53,159 @@ namespace UlamRandomizerDataLogic
 
             if (read.Read())
             {
+                CurrentUser.Id = Convert.ToInt32(read["AccountID"]);
                 CurrentUser.FirstName = read["FirstName"].ToString();
                 CurrentUser.LastName = read["LastName"].ToString();
                 CurrentUser.Gender  = read["Gender"].ToString();
                 CurrentUser.Birthday = DateOnly.FromDateTime(Convert.ToDateTime(read["Birthday"].ToString()));
+                sqlconnection.Close();
                 return CurrentUser;
+
             }
+            sqlconnection.Close();
             return null;
         }
 
+       
+        public void AddAccount(Account account)
+        {
+            var insertDetailsStatement = @"
+                INSERT INTO tbl_AccountDetails(FirstName, LastName, Gender, Birthday)
+                OUTPUT INSERTED.AccountID
+                VALUES (@FirstName, @LastName, @Gender, @Birthday)";
+            SqlCommand insertDetailsCommand = new SqlCommand(insertDetailsStatement, sqlconnection);
+            insertDetailsCommand.Parameters.AddWithValue("@FirstName", account.FirstName);
+            insertDetailsCommand.Parameters.AddWithValue("@LastName", account.LastName);
+            insertDetailsCommand.Parameters.AddWithValue("@Gender", account.Gender);
+            insertDetailsCommand.Parameters.AddWithValue("@Birthday", account.Birthday);
+
+            sqlconnection.Open();
+            int newUserID = (int)insertDetailsCommand.ExecuteScalar();
+            sqlconnection.Close();
+
+            var insertCredentialStatement = @"
+                INSERT INTO tbl_AccountCredentials(accountID, email, username, password)
+                VALUES (@accountID, @email, @username, @password)";
+            SqlCommand insertCredentialCommand = new SqlCommand(insertCredentialStatement, sqlconnection);
+            insertCredentialCommand.Parameters.AddWithValue("@accountID", newUserID);
+            insertCredentialCommand.Parameters.AddWithValue("@email", account.Email);
+            insertCredentialCommand.Parameters.AddWithValue("@username", account.Username);
+            insertCredentialCommand.Parameters.AddWithValue("@password", account.Password);
+
+            sqlconnection.Open();
+            insertCredentialCommand.ExecuteNonQuery();
+            sqlconnection.Close();
+        }
+        public bool DoesEmailExist(string Email)
+        {
+            var SelectStatement = "SELECT email FROM tbl_AccountCredentials WHERE email = @email";
+            SqlCommand selectCommand = new SqlCommand(SelectStatement, sqlconnection);
+            selectCommand.Parameters.AddWithValue("@email", Email);
+            sqlconnection.Open();
+            SqlDataReader read = selectCommand.ExecuteReader();
+
+            if (read.Read())
+            {
+                if (read.HasRows)
+                {
+                    sqlconnection.Close();
+                    return true;
+                }
+
+            }
+            sqlconnection.Close();
+            return false;
+
+
+        }
+
+        public void AddCustomUlamToFavorite(int accountID, int UlamID)
+        {
+            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, apiID,UlamType,DateFavorite) VALUES (@accountID, @UlamID,'Custom', GETDATE())";
+            SqlCommand insertCommand = new SqlCommand(InsertStatement, sqlconnection);
+            insertCommand.Parameters.AddWithValue("@accountID", accountID);
+            insertCommand.Parameters.AddWithValue("@UlamID", UlamID);
+            sqlconnection.Open();
+            insertCommand.ExecuteNonQuery();
+            sqlconnection.Close();
+        }
+        public void AddAPIToFavorite(int accountID, int UlamID)
+        {
+            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, apiID,UlamType,DateFavorite) VALUES (@accountID, @UlamID,'API', GETDATE())";
+            SqlCommand insertCommand = new SqlCommand(InsertStatement, sqlconnection);
+            insertCommand.Parameters.AddWithValue("@accountID", accountID);
+            insertCommand.Parameters.AddWithValue("@UlamID", UlamID);
+            sqlconnection.Open();
+            insertCommand.ExecuteNonQuery();
+            sqlconnection.Close();
+        }
+
+        public List<Ulam> GetFavoriteList(int accountID)
+        {
+            List<Ulam> Favs = new List<Ulam>();
+
+            var SelectStatement = "SELECT ulamName,MainIngredient1,MainIngredient2,ulamDescription,ulamPicture FROM tbl_Favorites AS Fav INNER JOIN tbl_UlamDetails AS Ulam ON Fav.ulamID = Ulam.ulamID WHERE accountID = @accountID AND UlamType = 'Custom'";
+            SqlCommand SelectCommand = new SqlCommand(SelectStatement, sqlconnection);
+            SelectCommand.Parameters.AddWithValue("@accountID", accountID);
+            sqlconnection.Open();
+            SqlDataReader reader = SelectCommand.ExecuteReader();
+            if (reader.Read())
+            {
+                Favs.Add(new Ulam
+                {
+                    UlamName = reader["UlamName"].ToString(),
+                    MainIngredient1 = reader["MainIngredient1"].ToString(),
+                    MainIngredient2 = reader["MainIngredient2"].ToString(),
+                    ulamDescription = reader["ulamDescription"].ToString(),
+                    ImgString = reader["ulamPicture"].ToString()
+                });
+            }
+            sqlconnection.Close();
+            return Favs;
+        }
+        public List<int> GetAPIList(int accountID)
+        {
+            var selectStatement = "SELECT apiID FROM tbl_Favorites WHERE AccountID = @AccountID AND UlamType = 'API'";
+            SqlCommand selectCommand = new SqlCommand(selectStatement, sqlconnection);
+            selectCommand.Parameters.AddWithValue("@AccountID", accountID);
+            sqlconnection.Open();
+            SqlDataReader reader = selectCommand.ExecuteReader();
+            List<int> apiList = new List<int>();
+            while (reader.Read())
+            {
+                apiList.Add(Convert.ToInt32(reader["apiID"]));
+            }
+            sqlconnection.Close();
+            return apiList;
+        }
+        public bool DoesFavoriteExist(int accountID, int ulamID)
+        {
+            var selectStatement = "SELECT apiID FROM tbl_Favorites WHERE AccountID = @AccountID AND apiID = @UlamID";
+            SqlCommand selectCommand = new SqlCommand(selectStatement, sqlconnection);
+            selectCommand.Parameters.AddWithValue("@AccountID", accountID);
+            selectCommand.Parameters.AddWithValue("@UlamID", ulamID);
+            sqlconnection.Open();
+            SqlDataReader read = selectCommand.ExecuteReader();
+            if (read.HasRows)
+            {
+                sqlconnection.Close();
+                return true;
+            }
+            else
+            {
+                sqlconnection.Close();
+                return false;
+            }
+        }
+        public void RemoveFavorite(int accountID, int ulamID)
+        {
+            var deleteStatement = "DELETE FROM tbl_Favorites WHERE AccountID = @AccountID AND (apiID = @UlamID OR ulamID = @UlamID)";
+            SqlCommand deleteCommand = new SqlCommand(deleteStatement, sqlconnection);
+            deleteCommand.Parameters.AddWithValue("@AccountID", accountID);
+            deleteCommand.Parameters.AddWithValue("@UlamID", ulamID);
+            sqlconnection.Open();
+            deleteCommand.ExecuteNonQuery();
+            sqlconnection.Close();
+        }
     }
 }

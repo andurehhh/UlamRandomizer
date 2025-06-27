@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using UlamRandomizerBusinessLogic;
 using UlamCommon;
 using System.Diagnostics.Metrics;
-
+using UlamRandomizerDataLogic;
+using HtmlAgilityPack;
 namespace UlamRandomizer
 {
     internal class Program
@@ -13,12 +14,16 @@ namespace UlamRandomizer
 
         static void Main(string[] args)
         {
-            if (LoginMessage())
+            bool Access = false;
+
+            Access = AskLogin();
+
+            if (Access)
             {
 
                 BusinessLogic BL = new BusinessLogic();
                 int optionChosen;
-                Console.WriteLine($"Welcome to AnUlam {ABL.IdentifyAccountUser().FirstName}!");
+                Console.WriteLine($"Welcome to AnUlam!");
                 do
                 {
                     DisplayActions();
@@ -42,25 +47,22 @@ namespace UlamRandomizer
 
                         case 4:
 
-                            DisplayEditUlam();
+                            SearchUlamAPI();
 
                             break;
 
                         case 5:
-
-                            DisplayRandomUlam();
-
+                            RandomAPI();
+                            //DisplayRandomUlam();
+                            //GetInfoAPI();
                             break;
 
-                        case 6:
-                            DisplayWholeList();
-                            break;
 
                         default:
                             Console.WriteLine("Thank you for using our services!");
                             break;
                     }
-                } while (optionChosen != 7);
+                } while (optionChosen != 6);
 
             }
         }
@@ -81,7 +83,7 @@ namespace UlamRandomizer
         }
         private static void DisplayActions()
         {
-            string[] options = { "[1] add Ulam", "[2] Remove Ulam", "[3] Display Ulam", "[4] Search an Ulam", "[5] Pick an Ulam!", "[6] see whole list, [7] Exit" };
+            string[] options = { "[1] add Ulam", "[2] Remove Ulam", "[3] Display Ulam", "[4] Search an Ulam", "[5] Pick an Ulam!", "[6] Exit" };
 
             Console.WriteLine("---------------------");
             foreach (string opt in options)
@@ -117,7 +119,7 @@ namespace UlamRandomizer
             }
             else
             {
-                Ulam NewUlam = BusinessLogic.CreateUlamObj(UlamName, MainIngredient1, MainIngredient2,Description);
+                Ulam NewUlam = BusinessLogic.CreateUlamObj(UlamName, MainIngredient1, MainIngredient2, Description);
 
                 if (!BusinessLogic.IsInList(NewUlam))
                 {
@@ -186,11 +188,9 @@ namespace UlamRandomizer
             ConsoleKey kc;
             do
             {
-                int RandomUlamIndex = BusinessLogic.RandomizeUlam();
+                Ulam RandomUlam = BusinessLogic.GetRandomUlam();
 
-                string ulamRandomized = BusinessLogic.GetUlams()[RandomUlamIndex].UlamName;
-                Console.WriteLine($"The selected ulam is {ulamRandomized}. \n");
-                Ulam SelectedRandomUlam = BusinessLogic.GetUlams()[RandomUlamIndex];
+                Console.WriteLine($"The selected ulam is {RandomUlam.UlamName}. \n");
 
                 DisplayArrowActions();
                 kc = Console.ReadKey(true).Key;
@@ -199,7 +199,7 @@ namespace UlamRandomizer
                     case ConsoleKey.LeftArrow: //Reject
                         if (BusinessLogic.GetUlams().Count > 1)
                         {
-                            RemoveFromRandom(SelectedRandomUlam);
+                            RemoveFromRandom(RandomUlam);
                         }
                         else
                         {
@@ -208,7 +208,7 @@ namespace UlamRandomizer
                         break;
 
                     case ConsoleKey.RightArrow: //Accept
-                        ChosenFromRandom(SelectedRandomUlam);
+                        ChosenFromRandom(RandomUlam);
                         Console.ReadKey(true);
                         kc = ConsoleKey.UpArrow;
                         break;
@@ -233,8 +233,9 @@ namespace UlamRandomizer
         public static void ChosenFromRandom(Ulam SelectedRandomUlam)
         {
             Console.WriteLine($"Ulam: {SelectedRandomUlam.UlamName} \n" +
-                $"Main Ingredient1: {SelectedRandomUlam.MainIngredient1}"+
-                $"Main Ingredient1: {SelectedRandomUlam.MainIngredient1}");
+                $"Main Ingredient1: {SelectedRandomUlam.MainIngredient1}\n" +
+                $"Main Ingredient2: {SelectedRandomUlam.MainIngredient2}" +
+                $"Description: {SelectedRandomUlam.ulamDescription}");
 
         }
 
@@ -279,7 +280,7 @@ namespace UlamRandomizer
             newUlam.MainIngredient2 = Console.ReadLine();
 
             Console.WriteLine("Please enter new Description: (Do not Enter for new Line)");
-            
+
             newUlam.ulamDescription = Console.ReadLine();
 
 
@@ -289,28 +290,98 @@ namespace UlamRandomizer
         private static bool LoginMessage()
         {
             bool retry = true;
+
+            Console.WriteLine("Please Enter your Username: ");
+            string user = Console.ReadLine();
+            Console.WriteLine("Password: ");
+            string pass = Console.ReadLine();
+            bool login = ABL.ConfirmLogin(user, pass);
+
+            if (login)
+            {
+                Console.WriteLine("Login Successful!");
+                return true;
+
+            }
+            else
+            {
+                retry = false;
+                Console.WriteLine("ERROR: Wrong username or Password");
+            }
+            return false;
+
+
+        }
+        private static bool AskLogin()
+        {
+            bool Access = false;
             do
             {
-                Console.WriteLine("Please Enter your Username: ");
+                Console.WriteLine("What would you like to do?\n[1]Login [2]Register [3]Exit");
+                int userInput = Convert.ToInt16(Console.ReadLine());
+                switch (userInput)
+                {
+                    case 1:
+                        Access = LoginMessage();
+                        if (Access)
+                        {
+                            return true;
+
+                        }
+                        break;
+                    case 2:
+                        RegisterMessage();
+                        break;
+
+                    default:
+                        return false;
+                        break;
+                }
+            }
+            while (!Access);
+            return Access;
+        }
+        private static void RegisterMessage()
+        {
+            Console.WriteLine("Let's Create an Account!: ");
+            Console.WriteLine("Enter your email:");
+            string email = Console.ReadLine();
+            if (ABL.DoesAccountExists(email))
+            {
+                Console.WriteLine("Error! Account already Exists.");
+            }
+            else
+            {
+                Console.WriteLine("Enter your username:");
                 string user = Console.ReadLine();
-                Console.WriteLine("Password: ");
+                Console.WriteLine("Password");
                 string pass = Console.ReadLine();
-                bool login = ABL.ConfirmLogin(user, pass);
+                Console.WriteLine("Password");
+                string confpass = Console.ReadLine();
 
-                if (login)
+                if (pass.Equals(confpass))
                 {
-                    Console.WriteLine("Login Successful!");
-                    return true;
+                    Console.WriteLine("Tell me about yourself: ");
+                    Console.WriteLine("First Name: ");
+                    string FName = Console.ReadLine();
 
+                    Console.WriteLine("Last Name:");
+                    string LName = Console.ReadLine();
+
+                    Console.WriteLine("Male, Female, Non-Binary or Prefer not to Tell?");
+                    string Gender = Console.ReadLine();
+
+                    Console.WriteLine("When's your Birthday? yyyy-mm-dd");
+                    DateOnly Bday = DateOnly.Parse(Console.ReadLine());
+
+                    ABL.AddAccount(user, pass, email, FName, LName, Gender, Bday);
+
+                    Console.WriteLine("You're Fully Registered!");
                 }
-                else
-                {
-                    retry = false;
-                    Console.WriteLine("ERROR: Wrong username or Password");
-                }
-            } 
-            while (retry == false);
-            return false;
+            }
+
+
+
         }
 
         private static void DisplayWholeList()
@@ -320,7 +391,8 @@ namespace UlamRandomizer
 
             Console.WriteLine("Here are the list of all ulam.");
             int index = 1;
-            foreach (Ulam current in ulamList){
+            foreach (Ulam current in ulamList)
+            {
                 Console.WriteLine($"{index}. ");
                 Console.WriteLine($"Ulam Name: {current.UlamName}");
                 Console.WriteLine($"Main Ingredient 1: {current.MainIngredient1}");
@@ -329,6 +401,43 @@ namespace UlamRandomizer
                 index++;
                 Console.WriteLine(" ");
             }
-        } 
+        }
+        private static void SearchUlamAPI()
+        {
+            Console.WriteLine("Enter food to search: ");
+            string ulamname = Console.ReadLine();
+
+            Console.WriteLine("Searching: ");
+            List<Ulam> search = SpoonacularBL.GetSearchResult(SpoonacularBL.sharedClient, ulamname).Result;
+
+            foreach (Ulam ulam in search)
+            {
+                Console.WriteLine($"Ulam ID: {ulam.Id}");
+                Console.WriteLine($"ulam Name: {ulam.UlamName}");
+                //Console.WriteLine($"Description: {ulam.ulamDescription}");
+
+
+            }
+        }
+        private static void GetInfoAPI()
+        {
+            Console.WriteLine("Enter food ID to search: ");
+            int ID = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Searching: ");
+            Ulam search = SpoonacularBL.GetUlamInfo(SpoonacularBL.sharedClient, ID).Result;
+
+            Console.WriteLine($"Ulam Name: {search.UlamName}");
+            Console.WriteLine($"Main Ingredient 1: {search.UlamName}");
+            Console.WriteLine($"Main Ingredient 2: {search.UlamName}");
+            Console.WriteLine($"Description: {BusinessLogic.StripHtmlTags(search.ulamDescription)}");
+
+        }
+        private static void RandomAPI()
+        {
+            Ulam randomUlam = SpoonacularBL.GenerateRandomUlam(SpoonacularBL.sharedClient).Result;
+            Console.WriteLine($"Selected Ulam: {randomUlam.UlamName}");
+        }
     }
 }
+
+

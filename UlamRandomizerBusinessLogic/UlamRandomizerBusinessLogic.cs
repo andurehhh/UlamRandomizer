@@ -1,5 +1,7 @@
 ﻿using UlamRandomizerDataLogic;
 using UlamCommon;
+using Microsoft.IdentityModel.Tokens;
+using HtmlAgilityPack;
 namespace UlamRandomizerBusinessLogic
 {
     public class BusinessLogic
@@ -30,12 +32,6 @@ namespace UlamRandomizerBusinessLogic
             }
                 
         }
-        public static int RandomizeUlam()
-        {
-            Random rndUlam = new Random();
-            int rndUlamIndex = rndUlam.Next(DL.GetUlams().Count);
-            return rndUlamIndex;
-        }
 
         public static void EditUlam(Ulam newUlam)
         {
@@ -43,7 +39,7 @@ namespace UlamRandomizerBusinessLogic
         }
         public static Ulam CreateUlamObj(string name, string MainIngredient1, string MainIngredient2, string Description)
         {
-            Ulam Newulam = new Ulam(name, MainIngredient1,MainIngredient2, Description);
+            Ulam Newulam = new Ulam(name, MainIngredient1, MainIngredient2, Description);
             if (!IsInList(Newulam))
             {
                 DL.CreateUlam(Newulam);
@@ -63,14 +59,34 @@ namespace UlamRandomizerBusinessLogic
                 DL.RemoveUlam(ulamInput);
             }
         }
-        //public static bool AddUlam(Ulam ulamInput)
-        //{
-        //    return DataLogic.AddUlam(ulamInput);
-        //}
         public static List<Ulam> GetUlams()
         {
             return DL.GetUlams();
-        }  
+        }
+        public static int RandomizeUlam()
+        {
+            Random rndUlam = new Random();
+            int rndUlamIndex = rndUlam.Next(DL.GetUlams().Count);
+            return rndUlamIndex;
+        }
+
+        public static Ulam GetRandomUlam()
+        {
+            int random = RandomizeUlam();
+            Ulam randomUlam = GetUlams()[random];
+            return randomUlam;
+        }
+
+        public static string StripHtmlTags(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+            var doc = new HtmlDocument();
+            doc.LoadHtml(input);
+            return doc.DocumentNode.InnerText;
+        }
         //public static void CreateDummyUlam()
         //{
         //    DataLogic.CreateDummyUlam();

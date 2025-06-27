@@ -1,6 +1,6 @@
 ﻿namespace UlamRandomizerGUI
 {
-    partial class DisplayUlamList
+    partial class SearchUlam
     {
         /// <summary>
         /// Required designer variable.
@@ -29,62 +29,56 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            UlamNameColumn = new DataGridViewTextBoxColumn();
-            MainIngredientColumn = new DataGridViewTextBoxColumn();
-            DescriptionColumn = new DataGridViewTextBoxColumn();
-            FavoriteBtnColumn = new DataGridViewButtonColumn();
+            UlamID = new DataGridViewTextBoxColumn();
+            UlamName = new DataGridViewTextBoxColumn();
             btnBackToMenu = new Button();
             button1 = new Button();
             btnAddUlam = new Button();
             label1 = new Label();
+            txtbSearch = new TextBox();
+            btnSearch = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { UlamNameColumn, MainIngredientColumn, DescriptionColumn, FavoriteBtnColumn });
-            dataGridView1.Enabled = false;
-            dataGridView1.Location = new Point(45, 81);
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { UlamID, UlamName });
+            dataGridView1.Location = new Point(40, 140);
+            dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(712, 274);
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(712, 377);
             dataGridView1.TabIndex = 5;
             // 
-            // UlamNameColumn
+            // UlamID
             // 
-            UlamNameColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            UlamNameColumn.HeaderText = "Ulam Name";
-            UlamNameColumn.MinimumWidth = 6;
-            UlamNameColumn.Name = "UlamNameColumn";
+            UlamID.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            UlamID.DataPropertyName = "Id";
+            UlamID.HeaderText = "Ulam ID";
+            UlamID.MinimumWidth = 6;
+            UlamID.Name = "UlamID";
+            UlamID.Width = 92;
             // 
-            // MainIngredientColumn
+            // UlamName
             // 
-            MainIngredientColumn.HeaderText = "Main Ingredient";
-            MainIngredientColumn.MinimumWidth = 6;
-            MainIngredientColumn.Name = "MainIngredientColumn";
-            MainIngredientColumn.Width = 125;
-            // 
-            // DescriptionColumn
-            // 
-            DescriptionColumn.HeaderText = "Description";
-            DescriptionColumn.MinimumWidth = 6;
-            DescriptionColumn.Name = "DescriptionColumn";
-            DescriptionColumn.Width = 125;
-            // 
-            // FavoriteBtnColumn
-            // 
-            FavoriteBtnColumn.HeaderText = "Favorite";
-            FavoriteBtnColumn.MinimumWidth = 6;
-            FavoriteBtnColumn.Name = "FavoriteBtnColumn";
-            FavoriteBtnColumn.ToolTipText = "Click to Add to the favorites Tab";
-            FavoriteBtnColumn.Width = 125;
+            UlamName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            UlamName.DataPropertyName = "UlamName";
+            UlamName.HeaderText = "Ulam Name";
+            UlamName.MinimumWidth = 6;
+            UlamName.Name = "UlamName";
             // 
             // btnBackToMenu
             // 
             btnBackToMenu.BackColor = Color.Transparent;
             btnBackToMenu.ForeColor = Color.Black;
-            btnBackToMenu.Location = new Point(45, 361);
+            btnBackToMenu.Location = new Point(40, 523);
             btnBackToMenu.Name = "btnBackToMenu";
             btnBackToMenu.Size = new Size(130, 54);
             btnBackToMenu.TabIndex = 25;
@@ -96,22 +90,23 @@
             // 
             button1.BackColor = Color.Transparent;
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(627, 361);
+            button1.Location = new Point(622, 523);
             button1.Name = "button1";
             button1.Size = new Size(130, 54);
             button1.TabIndex = 26;
             button1.Text = "View Ulam";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // btnAddUlam
             // 
             btnAddUlam.BackColor = Color.Transparent;
             btnAddUlam.ForeColor = Color.Black;
-            btnAddUlam.Location = new Point(491, 361);
+            btnAddUlam.Location = new Point(486, 523);
             btnAddUlam.Name = "btnAddUlam";
             btnAddUlam.Size = new Size(130, 54);
             btnAddUlam.TabIndex = 27;
-            btnAddUlam.Text = "Add Ulam";
+            btnAddUlam.Text = "Add Ulam To Favorites";
             btnAddUlam.UseVisualStyleBackColor = false;
             btnAddUlam.Click += button3_Click;
             // 
@@ -119,24 +114,45 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Mongolian Baiti", 23F);
-            label1.Location = new Point(304, 20);
+            label1.Location = new Point(40, 20);
             label1.Name = "label1";
-            label1.Size = new Size(164, 41);
+            label1.Size = new Size(278, 41);
             label1.TabIndex = 33;
-            label1.Text = "All Ulam";
-            label1.Click += label1_Click;
+            label1.Text = "Search an Ulam:";
             // 
-            // DisplayUlam
+            // txtbSearch
+            // 
+            txtbSearch.Font = new Font("Segoe UI", 12F);
+            txtbSearch.Location = new Point(40, 76);
+            txtbSearch.Name = "txtbSearch";
+            txtbSearch.Size = new Size(584, 34);
+            txtbSearch.TabIndex = 34;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.Transparent;
+            btnSearch.ForeColor = Color.Black;
+            btnSearch.Location = new Point(630, 76);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(122, 41);
+            btnSearch.TabIndex = 35;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // SearchUlam
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(800, 628);
+            Controls.Add(btnSearch);
+            Controls.Add(txtbSearch);
             Controls.Add(label1);
             Controls.Add(btnAddUlam);
             Controls.Add(button1);
             Controls.Add(btnBackToMenu);
             Controls.Add(dataGridView1);
-            Name = "DisplayUlam";
+            Name = "SearchUlam";
             Text = "DisplayUlam";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -148,11 +164,11 @@
         private DataGridView dataGridView1;
         private Button btnBackToMenu;
         private Button button1;
-        private DataGridViewTextBoxColumn UlamNameColumn;
-        private DataGridViewTextBoxColumn MainIngredientColumn;
-        private DataGridViewTextBoxColumn DescriptionColumn;
-        private DataGridViewButtonColumn FavoriteBtnColumn;
         private Button btnAddUlam;
         private Label label1;
+        private TextBox txtbSearch;
+        private Button btnSearch;
+        private DataGridViewTextBoxColumn UlamID;
+        private DataGridViewTextBoxColumn UlamName;
     }
 }

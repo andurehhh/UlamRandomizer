@@ -1,10 +1,14 @@
+using UlamCommon;
+
 namespace UlamRandomizerGUI
 {
     public partial class frmMainMenu : Form
     {
-        public frmMainMenu()
+        private Account curr;
+        public frmMainMenu(Account CurrentAccount)
         {
             InitializeComponent();
+            curr = CurrentAccount;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -14,7 +18,7 @@ namespace UlamRandomizerGUI
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DisplayUlamList display = new DisplayUlamList();
+            SearchUlam display = new SearchUlam(curr);
             display.Show();
         }
 
@@ -31,14 +35,15 @@ namespace UlamRandomizerGUI
 
         private void btnRandomize_Click(object sender, EventArgs e)
         {
-            RandomUlam randomize = new RandomUlam();
+            RandomUlam randomize = new RandomUlam(curr);
             randomize.Show();
         }
 
         private void btnFavoritesList_Click(object sender, EventArgs e)
         {
-            FavoritesList fav= new FavoritesList();
+            FavoritesList fav = new FavoritesList(curr);
             fav.Show();
+            this.Hide();
         }
     }
 }
