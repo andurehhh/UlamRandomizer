@@ -71,6 +71,12 @@ namespace UlamRandomizerGUI
             AccountBusinessLogic ABL = new AccountBusinessLogic();
             ABL.RemoveFavorite(curr.Id, selectedID);
             MessageBox.Show("Ulam removed from favorites successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Dispose();
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
         }
     }
 }

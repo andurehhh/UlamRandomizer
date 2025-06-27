@@ -29,7 +29,7 @@ namespace UlamRandomizerGUI
             DataGridViewRow selectedRow = dgFavorites.SelectedRows[0];
             string TypeUlam = selectedRow.Cells["Type"].Value.ToString();
             int ulamSelected = Convert.ToInt32(selectedRow.Cells["Id"].Value);
-            ViewFromFav view = new ViewFromFav(curr, ulamSelected,TypeUlam);
+            ViewFromFav view = new ViewFromFav(curr, ulamSelected, TypeUlam);
             view.Show();
 
         }
@@ -60,6 +60,11 @@ namespace UlamRandomizerGUI
             {
                 throw;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

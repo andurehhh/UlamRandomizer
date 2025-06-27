@@ -74,6 +74,7 @@
             btnMenu.TabIndex = 36;
             btnMenu.Text = "Back to Menu";
             btnMenu.UseVisualStyleBackColor = false;
+            btnMenu.Click += btnMenu_Click;
             // 
             // txbDescription
             // 
