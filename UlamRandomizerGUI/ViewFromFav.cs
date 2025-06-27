@@ -39,6 +39,8 @@ namespace UlamRandomizerGUI
                     {
                         txtbUlamName.Text = UlamSelected.UlamName;
                         txbDescription.Text = BusinessLogic.StripHtmlTags(UlamSelected.ulamDescription);
+                        txtbIngredient1.Text = UlamSelected.MainIngredient1;
+                        txtbIngredient2.Text = UlamSelected.MainIngredient2;
                         pictureBox1.LoadAsync(UlamSelected.ImgString);
                     }
                 }
@@ -52,6 +54,7 @@ namespace UlamRandomizerGUI
                     txbDescription.Text = BusinessLogic.StripHtmlTags(UlamSelected.ulamDescription);
                     txtbIngredient1.Text = UlamSelected.MainIngredient1;
                     txtbIngredient2.Text = UlamSelected.MainIngredient2;
+
 
                 }
 

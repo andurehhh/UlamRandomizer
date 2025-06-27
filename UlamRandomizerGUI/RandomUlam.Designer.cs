@@ -33,8 +33,8 @@
             button1 = new Button();
             button3 = new Button();
             label2 = new Label();
-            label4 = new Label();
-            label5 = new Label();
+            lblIngredient1 = new Label();
+            lblIngredient2 = new Label();
             btnMenu = new Button();
             txtbUlamName = new TextBox();
             panel1 = new Panel();
@@ -44,9 +44,10 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Tahoma", 9F);
             label1.Location = new Point(353, 278);
             label1.Name = "label1";
-            label1.Size = new Size(91, 20);
+            label1.Size = new Size(90, 18);
             label1.TabIndex = 0;
             label1.Text = "Ulam Name:";
             // 
@@ -87,33 +88,34 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Tahoma", 9F);
             label2.Location = new Point(341, 372);
             label2.Name = "label2";
-            label2.Size = new Size(123, 20);
+            label2.Size = new Size(121, 18);
             label2.TabIndex = 6;
             label2.Text = "Main Ingredients:";
             // 
-            // label4
+            // lblIngredient1
             // 
-            label4.AutoSize = true;
-            label4.BorderStyle = BorderStyle.Fixed3D;
-            label4.Font = new Font("Sitka Banner", 13.7999992F);
-            label4.Location = new Point(178, 404);
-            label4.Name = "label4";
-            label4.Size = new Size(114, 35);
-            label4.TabIndex = 8;
-            label4.Text = "Ingredient1";
+            lblIngredient1.AutoSize = true;
+            lblIngredient1.BorderStyle = BorderStyle.Fixed3D;
+            lblIngredient1.Font = new Font("Sitka Banner", 13.7999992F);
+            lblIngredient1.Location = new Point(178, 404);
+            lblIngredient1.Name = "lblIngredient1";
+            lblIngredient1.Size = new Size(114, 35);
+            lblIngredient1.TabIndex = 8;
+            lblIngredient1.Text = "Ingredient1";
             // 
-            // label5
+            // lblIngredient2
             // 
-            label5.AutoSize = true;
-            label5.BorderStyle = BorderStyle.Fixed3D;
-            label5.Font = new Font("Sitka Banner", 13.7999992F);
-            label5.Location = new Point(489, 404);
-            label5.Name = "label5";
-            label5.Size = new Size(117, 35);
-            label5.TabIndex = 9;
-            label5.Text = "Ingredient2";
+            lblIngredient2.AutoSize = true;
+            lblIngredient2.BorderStyle = BorderStyle.Fixed3D;
+            lblIngredient2.Font = new Font("Sitka Banner", 13.7999992F);
+            lblIngredient2.Location = new Point(489, 404);
+            lblIngredient2.Name = "lblIngredient2";
+            lblIngredient2.Size = new Size(117, 35);
+            lblIngredient2.TabIndex = 9;
+            lblIngredient2.Text = "Ingredient2";
             // 
             // btnMenu
             // 
@@ -153,8 +155,8 @@
             ClientSize = new Size(800, 628);
             Controls.Add(txtbUlamName);
             Controls.Add(btnMenu);
-            Controls.Add(label5);
-            Controls.Add(label4);
+            Controls.Add(lblIngredient2);
+            Controls.Add(lblIngredient1);
             Controls.Add(label2);
             Controls.Add(button3);
             Controls.Add(button1);
@@ -175,8 +177,8 @@
         private Button button1;
         private Button button3;
         private Label label2;
-        private Label label4;
-        private Label label5;
+        private Label lblIngredient1;
+        private Label lblIngredient2;
         private Button btnMenu;
         private TextBox txtbUlamName;
         private Panel panel1;

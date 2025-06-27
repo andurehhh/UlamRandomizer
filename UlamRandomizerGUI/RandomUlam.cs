@@ -31,6 +31,8 @@ namespace UlamRandomizerGUI
             {
                 txtbUlamName.Text = RandomUlam.UlamName;
                 pictureBox1.LoadAsync(RandomUlam.ImgString);
+                lblIngredient1.Text = RandomUlam.MainIngredient1;
+                lblIngredient2.Text = RandomUlam.MainIngredient2;
                 selectedID = Convert.ToInt32(RandomUlam.Id);
             }
             else

@@ -96,6 +96,7 @@ namespace UlamRandomizerBusinessLogic
             DBDataLogic DLS = new DBDataLogic();
             return DLS.GetSpecificUlam(ulamID);
         }
+
     }
 
 }

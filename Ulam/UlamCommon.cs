@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using UlamRandomizerBusinessLogic;
 
 namespace UlamCommon;
 
@@ -23,6 +24,8 @@ public class Ulam
     [JsonPropertyName("id")]
     public int Id { get; set; }
     public string Type { get; set; }
+    [JsonPropertyName("extendedIngredients")]
+    public List<Ingredient> ingredients { get; set; }
     public Ulam()
     {
     }
