@@ -81,7 +81,7 @@ namespace UlamRandomizerGUI
             {
                 if (!ABL.DoesFavoriteExist(curr.Id, selectedID))
                 {
-                    ABL.AddAPIUlamToFavorite(curr.Id, selectedID);
+                    ABL.AddAPIUlamToFavorite(curr.Id, selectedID, UlamSelected.UlamName);
                     MessageBox.Show("Ulam added to favorites successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else

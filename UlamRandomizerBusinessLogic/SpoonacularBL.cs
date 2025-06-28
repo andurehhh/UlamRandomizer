@@ -33,50 +33,76 @@ namespace UlamRandomizerBusinessLogic
         }
         public static async Task<Ulam> GetUlamInfo(HttpClient httpClient, int id)
         {
-            var response = await httpClient.GetFromJsonAsync<Ulam>($"recipes/{id}/information?apiKey={key}");
-
-            IdentifyMainIngredients(response);
-
-            if (response == null)
+            try
             {
-                throw new InvalidOperationException($"No Ulam found with ID: {id}");
+
+
+                var response = await httpClient.GetFromJsonAsync<Ulam>($"recipes/{id}/information?apiKey={key}");
+
+                IdentifyMainIngredients(response);
+
+                if (response == null)
+                {
+                    throw new InvalidOperationException($"No Ulam found with ID: {id}");
+                }
+                return response;
             }
-            return response;
+            catch (AggregateException)
+            {
+
+                throw new AggregateException("Limit for Spoonacular Exceeded. Try again tomorrow.");
+            }
         }
 
 
 
         public static async Task<List<Ulam>> GetSearchResult(HttpClient httpClient, string query)
         {
-            var response = await httpClient.GetFromJsonAsync<SpoonacularSearchResponse>(
-                $"recipes/complexSearch?query={query}&number=20&apiKey={key}");
+            try
+            {
+                var response = await httpClient.GetFromJsonAsync<SpoonacularSearchResponse>(
+                    $"recipes/complexSearch?query={query}&number=20&apiKey={key}");
 
-            if (response != null && response.results != null)
-            {
-                return response.results;
+                if (response != null && response.results != null)
+                {
+                    return response.results;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"No results found for query: {query}");
+                }
             }
-            else
+            catch (AggregateException)
             {
-                throw new InvalidOperationException($"No results found for query: {query}");
+
+                throw new AggregateException("Limit for Spoonacular Exceeded. Try again tomorrow.");
             }
         }
         public static async Task<Ulam> GenerateRandomUlam(HttpClient httpClient)
         {
-            var response = await httpClient.GetFromJsonAsync<RandomRecipeResponse>($"recipes/random?number=1&include-tags=lunch,dinner&exclude-tags=dessert&apiKey={key}");
-
-            IdentifyMainIngredients(response.recipes.First());
-            if (response == null)
+            try
             {
-                throw new InvalidOperationException("Failed to generate a random Ulam.");
+                var response = await httpClient.GetFromJsonAsync<RandomRecipeResponse>($"recipes/random?number=1&include-tags=lunch,dinner&exclude-tags=dessert&apiKey={key}");
 
+                IdentifyMainIngredients(response.recipes.First());
+                if (response == null)
+                {
+                    throw new InvalidOperationException("Failed to generate a random Ulam.");
+
+                }
+                else
+                {
+                    return response.recipes.First();
+
+                }
             }
-            else
+            catch (AggregateException)
             {
-                return response.recipes.First();
 
+                throw new AggregateException("Limit for Spoonacular Exceeded. Try again tomorrow.");
             }
         }
-        public static  void IdentifyMainIngredients(Ulam ulam)
+        public static void IdentifyMainIngredients(Ulam ulam)
         {
             if (ulam.ingredients != null)
             {

@@ -146,12 +146,14 @@ namespace UlamRandomizerDataLogic
             return -1;
 
         }
-        public void AddAPIToFavorite(int accountID, int UlamID)
+        public void AddAPIToFavorite(int accountID, int UlamID,string APIName)
         {
-            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, apiID,UlamType,DateFavorite) VALUES (@accountID, @UlamID,'API', GETDATE())";
+            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, apiID,UlamName,UlamType,DateFavorite) VALUES (@accountID, @UlamID,@UlamName,'API', GETDATE())";
             SqlCommand insertCommand = new SqlCommand(InsertStatement, sqlconnection);
             insertCommand.Parameters.AddWithValue("@accountID", accountID);
             insertCommand.Parameters.AddWithValue("@UlamID", UlamID);
+            insertCommand.Parameters.AddWithValue("@UlamName", APIName);
+
             sqlconnection.Open();
             insertCommand.ExecuteNonQuery();
             sqlconnection.Close();
@@ -161,7 +163,7 @@ namespace UlamRandomizerDataLogic
         {
             List<Ulam> Favs = new List<Ulam>();
 
-            var SelectStatement = "SELECT Fav.ulamID,ulamName,MainIngredient1,MainIngredient2,ulamDescription,ulamPicture, Fav.UlamType FROM tbl_Favorites AS Fav INNER JOIN tbl_UlamDetails AS Ulam ON Fav.ulamID = Ulam.ulamID WHERE accountID = @accountID AND UlamType = 'Custom'";
+            var SelectStatement = "SELECT Fav.ulamID,Ulam.ulamName,MainIngredient1,MainIngredient2,ulamDescription,ulamPicture, Fav.UlamType FROM tbl_Favorites AS Fav INNER JOIN tbl_UlamDetails AS Ulam ON Fav.ulamID = Ulam.ulamID WHERE accountID = @accountID AND UlamType = 'Custom'";
             SqlCommand SelectCommand = new SqlCommand(SelectStatement, sqlconnection);
             SelectCommand.Parameters.AddWithValue("@accountID", accountID);
             sqlconnection.Open();
@@ -183,17 +185,23 @@ namespace UlamRandomizerDataLogic
             sqlconnection.Close();
             return Favs;
         }
-        public List<int> GetAPIList(int accountID)
+        public List<Ulam> GetAPIList(int accountID)
         {
-            var selectStatement = "SELECT apiID FROM tbl_Favorites WHERE AccountID = @AccountID AND UlamType = 'API'";
+            var selectStatement = "SELECT apiID,UlamName,UlamType FROM tbl_Favorites WHERE AccountID = @AccountID AND UlamType = 'API'";
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlconnection);
             selectCommand.Parameters.AddWithValue("@AccountID", accountID);
             sqlconnection.Open();
             SqlDataReader reader = selectCommand.ExecuteReader();
-            List<int> apiList = new List<int>();
+            List<Ulam> apiList = new List<Ulam>();
             while (reader.Read())
             {
-                apiList.Add(Convert.ToInt32(reader["apiID"]));
+                apiList.Add(new Ulam
+                {
+                    Id = Convert.ToInt32(reader["apiID"]),
+                    UlamName = reader["UlamName"].ToString(),
+                    Type = reader["UlamType"].ToString(),
+                }
+                );
             }
             sqlconnection.Close();
             return apiList;

@@ -54,28 +54,33 @@ namespace UlamRandomizerBusinessLogic
         {
             AccountLogic.AddCustomUlamToFavorite(accountID, UlamID);
         }
-        public void AddAPIUlamToFavorite(int accountID, int UlamID)
+        public void AddAPIUlamToFavorite(int accountID, int UlamID, string UlamName)
         {
-            AccountLogic.AddAPIToFavorite(accountID, UlamID);
+            AccountLogic.AddAPIToFavorite(accountID, UlamID, UlamName);
         }
         public async Task<List<Ulam>> GetFavoriteAll(Account account)
         {
             List<Ulam>Favs = AccountLogic.GetFavoriteList(account.Id);
-            Favs.AddRange(await ExtractAPIList(account.Id));
+            Favs.AddRange(await GetApiLlist(account.Id));
             return Favs;
         }
-        public async Task<List<Ulam>> ExtractAPIList(int accountID)
+        public async Task<List<Ulam>> GetApiLlist(int accountID)
         {
-            List<Ulam> apiUlams = new List<Ulam>();
-            List<int> apilist = AccountLogic.GetAPIList(accountID);
-            foreach (var item in apilist)
-            {
-                Ulam newUlam = await SpoonacularBL.GetUlamInfo(SpoonacularBL.sharedClient, item);
-                newUlam.Type = string.Format("API");
-                apiUlams.Add(newUlam);
-            }
-            return apiUlams;
+            return AccountLogic.GetAPIList(accountID);
         }
+
+        //public async Task<List<Ulam>> ExtractAPIList(int accountID)
+        //{
+        //    List<Ulam> apiUlams = new List<Ulam>();
+        //    List<int> apilist = AccountLogic.GetAPIList(accountID);
+        //    foreach (var item in apilist)
+        //    {
+        //        Ulam newUlam = await SpoonacularBL.GetUlamInfo(SpoonacularBL.sharedClient, item);
+        //        newUlam.Type = string.Format("API");
+        //        apiUlams.Add(newUlam);
+        //    }
+        //    return apiUlams;
+        //}
         public bool DoesFavoriteExist(int accountID, int ulamID)
         {
             return AccountLogic.DoesFavoriteExist(accountID, ulamID);
