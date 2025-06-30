@@ -70,10 +70,10 @@ namespace UlamRandomizerBusinessLogic
             return rndUlamIndex;
         }
 
-        public static Ulam GetRandomUlam()
+        public static Ulam GetRandomUlam(List<Ulam> ulamList)
         {
             int random = RandomizeUlam();
-            Ulam randomUlam = GetUlams()[random];
+            Ulam randomUlam = ulamList[random];
             return randomUlam;
         }
 
@@ -87,14 +87,14 @@ namespace UlamRandomizerBusinessLogic
             doc.LoadHtml(input);
             return doc.DocumentNode.InnerText;
         }
-        //public static void CreateDummyUlam()
-        //{
-        //    DataLogic.CreateDummyUlam();
-        //}
-        public Ulam GetUlambyID(int ulamID)
+        public static Ulam GetUlambyID(int ulamID)
         {
-            DBDataLogic DLS = new DBDataLogic();
-            return DLS.GetSpecificUlam(ulamID);
+            return DL.GetUlambyID(ulamID);
+        }
+
+        public static void GetRandomUlamGUI()
+        {
+
         }
 
     }

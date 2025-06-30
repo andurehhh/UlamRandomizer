@@ -35,6 +35,10 @@ namespace UlamRandomizerDataLogic
         {
             ulamRandomizerDataLogic.UpdateUlam(ulam);
         }
+        public Ulam GetUlambyID(int ulamID)
+        {
+            return ulamRandomizerDataLogic.GetUlamByID(ulamID);
+        }
 
     }
 }

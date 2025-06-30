@@ -61,7 +61,7 @@ namespace UlamRandomizerDataLogic
             sqlConnection.Close();
             return ulamList;
         }
-        public Ulam GetSpecificUlam(int ulamID)
+        public Ulam GetUlamByID(int ulamID)
         {
             var selectStatement = "SELECT UlamName,MainIngredient1,MainIngredient2,UlamDescription,UlamPicture FROM tbl_ulamDetails WHERE UlamID = @UlamID";
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
@@ -101,8 +101,9 @@ namespace UlamRandomizerDataLogic
 
         public void UpdateUlam(Ulam ulam)
         {
+            sqlConnection.Close();
             sqlConnection.Open();
-            var updateStatement = $"UPDATE tbl_ulamDetails SET MainIngredient1 = @MainIngredient1, MainIngredient2 = @MainIngredient2 ulamDescription = @ulamDescription WHERE UlamName = @UlamName";
+            var updateStatement = $"UPDATE tbl_ulamDetails SET MainIngredient1 = @MainIngredient1, MainIngredient2 = @MainIngredient2, ulamDescription = @ulamDescription WHERE UlamName = @UlamName";
 
             SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
 

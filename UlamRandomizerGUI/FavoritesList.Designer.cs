@@ -37,6 +37,8 @@
             UlamNameColumn = new DataGridViewTextBoxColumn();
             Type = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
+            btnEditUlam = new Button();
+            btnRandomizeList = new Button();
             ((System.ComponentModel.ISupportInitialize)dgFavorites).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -57,11 +59,11 @@
             // 
             btnRemoveUlam.BackColor = Color.Wheat;
             btnRemoveUlam.ForeColor = Color.Black;
-            btnRemoveUlam.Location = new Point(488, 518);
+            btnRemoveUlam.Location = new Point(584, 518);
             btnRemoveUlam.Name = "btnRemoveUlam";
-            btnRemoveUlam.Size = new Size(130, 54);
+            btnRemoveUlam.Size = new Size(82, 54);
             btnRemoveUlam.TabIndex = 31;
-            btnRemoveUlam.Text = "Remove from Favorites";
+            btnRemoveUlam.Text = "Remove Favorite";
             btnRemoveUlam.UseVisualStyleBackColor = false;
             btnRemoveUlam.Click += btnRemoveUlam_Click;
             // 
@@ -69,9 +71,9 @@
             // 
             button1.BackColor = Color.Wheat;
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(624, 518);
+            button1.Location = new Point(672, 518);
             button1.Name = "button1";
-            button1.Size = new Size(130, 54);
+            button1.Size = new Size(82, 54);
             button1.TabIndex = 30;
             button1.Text = "View Ulam";
             button1.UseVisualStyleBackColor = false;
@@ -138,6 +140,30 @@
             panel1.Size = new Size(796, 82);
             panel1.TabIndex = 34;
             // 
+            // btnEditUlam
+            // 
+            btnEditUlam.BackColor = Color.Wheat;
+            btnEditUlam.ForeColor = Color.Black;
+            btnEditUlam.Location = new Point(492, 518);
+            btnEditUlam.Name = "btnEditUlam";
+            btnEditUlam.Size = new Size(82, 54);
+            btnEditUlam.TabIndex = 35;
+            btnEditUlam.Text = "Edit   Ulam";
+            btnEditUlam.UseVisualStyleBackColor = false;
+            btnEditUlam.Click += btnEditUlam_Click;
+            // 
+            // btnRandomizeList
+            // 
+            btnRandomizeList.BackColor = Color.Wheat;
+            btnRandomizeList.ForeColor = Color.Black;
+            btnRandomizeList.Location = new Point(313, 518);
+            btnRandomizeList.Name = "btnRandomizeList";
+            btnRandomizeList.Size = new Size(98, 54);
+            btnRandomizeList.TabIndex = 36;
+            btnRandomizeList.Text = "Randomize";
+            btnRandomizeList.UseVisualStyleBackColor = false;
+            btnRandomizeList.Click += btnRandomizeList_Click;
+            // 
             // FavoritesList
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -145,6 +171,8 @@
             AutoSize = true;
             BackColor = Color.Honeydew;
             ClientSize = new Size(800, 628);
+            Controls.Add(btnRandomizeList);
+            Controls.Add(btnEditUlam);
             Controls.Add(dgFavorites);
             Controls.Add(btnBackToMenu);
             Controls.Add(btnRemoveUlam);
@@ -169,5 +197,7 @@
         private DataGridViewTextBoxColumn UlamNameColumn;
         private DataGridViewTextBoxColumn Type;
         private Panel panel1;
+        private Button btnEditUlam;
+        private Button btnRandomizeList;
     }
 }

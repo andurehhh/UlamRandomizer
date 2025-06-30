@@ -13,5 +13,6 @@ namespace UlamRandomizerDataLogic
         public void CreateUlam(Ulam ulam);
         public void UpdateUlam(Ulam ulam);
         public void RemoveUlam(Ulam ulam);
+        public Ulam GetUlamByID(int UlamID);
     }
 }

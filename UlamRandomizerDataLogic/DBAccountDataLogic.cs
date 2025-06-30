@@ -119,12 +119,13 @@ namespace UlamRandomizerDataLogic
 
         }
 
-        public void AddCustomUlamToFavorite(int accountID, int UlamID)
+        public void AddCustomUlamToFavorite(int accountID, int UlamID,string UlamName)
         {
-            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, UlamID,UlamType,DateFavorite) VALUES (@accountID, @UlamID,'Custom', GETDATE())";
+            var InsertStatement = "INSERT INTO tbl_Favorites (AccountID, UlamID,UlamName,UlamType,DateFavorite) VALUES (@accountID, @UlamID,@UlamName,'Custom', GETDATE())";
             SqlCommand insertCommand = new SqlCommand(InsertStatement, sqlconnection);
             insertCommand.Parameters.AddWithValue("@accountID", accountID);
             insertCommand.Parameters.AddWithValue("@UlamID", UlamID);
+            insertCommand.Parameters.AddWithValue("@UlamName", UlamName);
             sqlconnection.Open();
             insertCommand.ExecuteNonQuery();
             sqlconnection.Close();
@@ -168,7 +169,7 @@ namespace UlamRandomizerDataLogic
             SelectCommand.Parameters.AddWithValue("@accountID", accountID);
             sqlconnection.Open();
             SqlDataReader reader = SelectCommand.ExecuteReader();
-            if (reader.Read())
+            while (reader.Read())
             {
                 Favs.Add(new Ulam
                 {

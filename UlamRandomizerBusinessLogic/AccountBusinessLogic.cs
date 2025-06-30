@@ -50,9 +50,9 @@ namespace UlamRandomizerBusinessLogic
         {
             return AccountLogic.DoesEmailExist(email);
         }
-        public void AddCustomUlamToFavorite(int accountID, int UlamID)
+        public void AddCustomUlamToFavorite(int accountID, int UlamID, string UlamName)
         {
-            AccountLogic.AddCustomUlamToFavorite(accountID, UlamID);
+            AccountLogic.AddCustomUlamToFavorite(accountID, UlamID,UlamName);
         }
         public void AddAPIUlamToFavorite(int accountID, int UlamID, string UlamName)
         {

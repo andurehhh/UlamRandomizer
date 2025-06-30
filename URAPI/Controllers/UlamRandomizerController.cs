@@ -19,13 +19,13 @@ namespace URAPI.Controllers
             List<Ulam> ulams = BusinessLogic.GetUlams();
             return ulams;
         }
-        [HttpGet("SearchUlam")]
+        [HttpGet("Search Ulam")]
         public Ulam SearchUlamList(string NameofUlam)
         {
             Ulam ulamFound= BusinessLogic.SearchUlamList(NameofUlam);
             return ulamFound;
         }
-        [HttpGet("IsInList")]
+        [HttpGet("Is In List")]
         public bool IsInList(Ulam UlamToFind)
         {
             return BusinessLogic.IsInList(UlamToFind);
@@ -52,7 +52,14 @@ namespace URAPI.Controllers
         [HttpGet("Randomize Ulam")]
         public Ulam RandomizeUlam()
         {
-            return BusinessLogic.GetRandomUlam();
+            return BusinessLogic.GetRandomUlam(BusinessLogic.GetUlams());
+        }
+
+        [HttpGet("Get Ulam By ID")]
+        public Ulam GetUlamByID(int id)
+        {
+
+            return BusinessLogic.GetUlambyID(id);
         }
         //UPDATE
     }

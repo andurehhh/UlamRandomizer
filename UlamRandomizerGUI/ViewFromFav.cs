@@ -48,7 +48,7 @@ namespace UlamRandomizerGUI
                 {
 
                     BusinessLogic ABL = new BusinessLogic();
-                    UlamSelected = ABL.GetUlambyID(selectedID);
+                    UlamSelected = BusinessLogic.GetUlambyID(selectedID);
 
                     txtbUlamName.Text = UlamSelected.UlamName;
                     txbDescription.Text = BusinessLogic.StripHtmlTags(UlamSelected.ulamDescription);
@@ -69,9 +69,14 @@ namespace UlamRandomizerGUI
         private void btnRemove_Click(object sender, EventArgs e)
         {
             AccountBusinessLogic ABL = new AccountBusinessLogic();
-            ABL.RemoveFavorite(curr.Id, selectedID);
-            MessageBox.Show("Ulam removed from favorites successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Dispose();
+            var AssuranceMessage = MessageBox.Show("Are you sure you want to remove this Ulam from your favorites?", "Remove?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
+            if (AssuranceMessage == DialogResult.Yes)
+            {
+                ABL.RemoveFavorite(curr.Id, selectedID);
+                MessageBox.Show("Ulam removed from favorites successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Dispose();
+
+            }
         }
 
         private void btnMenu_Click(object sender, EventArgs e)

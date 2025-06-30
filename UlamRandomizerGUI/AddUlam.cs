@@ -28,7 +28,7 @@ namespace UlamRandomizerGUI
             {
                 Ulam newUlam = BusinessLogic.CreateUlamObj(txtbUlamName.Text, txtbMainIngredient1.Text, txbMainIngredient2.Text, txtbDescription.Text);
                 int newUlamID=ABL.GetUlamID(newUlam);
-                ABL.AddCustomUlamToFavorite(curr.Id, newUlamID);
+                ABL.AddCustomUlamToFavorite(curr.Id, newUlamID,newUlam.UlamName);
                 MessageBox.Show("Ulam Added Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)

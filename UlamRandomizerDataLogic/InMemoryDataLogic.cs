@@ -37,6 +37,10 @@ namespace UlamRandomizerDataLogic
             ulamList.Add(new Ulam("Gambas", "Shrimp", "", "A Spanish tapa featuring shrimp (gambas) quickly cooked in olive oil with garlic, chili, and sometimes a splash of white wine or brandy."));
             ulamList.Add(new Ulam("Beef Stroganoff", "Beef", "", "A creamy Russian dish made with sautéed pieces of beef, often served in a sauce with sour cream, onions, and mushrooms, typically over egg noodles or rice."));
 
+            foreach (Ulam ulam in ulamList)
+            {
+                ulam.Type = "Custom";
+            }
         }
 
         public void CreateUlam(Ulam ulam)
@@ -44,8 +48,24 @@ namespace UlamRandomizerDataLogic
             ulamList.Add(ulam);
         }
 
+        public Ulam GetUlamByID(int UlamID)
+        {
+            int index = -1;
+            for (int i = 0; i < ulamList.Count; i++)
+            {
+                if (ulamList[i].Id == UlamID)
+                {
+                    return ulamList[i];
+                }
+
+            }
+            return null;
+            
+        }
+
         public List<Ulam> GetUlams()
         {
+            autoNumber(ulamList);
             return ulamList;
         }
 
@@ -79,6 +99,18 @@ namespace UlamRandomizerDataLogic
                 }
             }
 
+        }
+        private void autoNumber(List<Ulam> list)
+        {
+            int index = 0;
+            foreach (Ulam ulam in list)
+            {
+                if (ulam.Type.Equals("Custom"))
+                {
+                    ulam.Id = index;
+                    index++;
+                }
+            }
         }
     }
 

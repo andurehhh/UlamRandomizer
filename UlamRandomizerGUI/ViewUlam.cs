@@ -48,7 +48,7 @@ namespace UlamRandomizerGUI
                 {
 
                     BusinessLogic ABL = new BusinessLogic();
-                    UlamSelected = ABL.GetUlambyID(selectedID);
+                    UlamSelected = BusinessLogic.GetUlambyID(selectedID);
 
                     txtbUlamName.Text = UlamSelected.UlamName;
                     txbDescription.Text = BusinessLogic.StripHtmlTags(UlamSelected.ulamDescription);

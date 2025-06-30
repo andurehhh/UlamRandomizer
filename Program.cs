@@ -38,31 +38,27 @@ namespace UlamRandomizer
                             break;
 
                         case 2:
-                            AskUlamToRemove();
-                            break;
-
-                        case 3:
                             DisplayUlam();
                             break;
 
-                        case 4:
+                        case 3:
 
                             SearchUlamAPI();
-
                             break;
 
+                        case 4:
+                            //RandomAPI();
+                            GetInfoAPI();
+                            break;
                         case 5:
-                            RandomAPI();
-                            //DisplayRandomUlam();
-                            //GetInfoAPI();
+                            DisplayRandomUlam();
                             break;
-
 
                         default:
                             Console.WriteLine("Thank you for using our services!");
                             break;
                     }
-                } while (optionChosen != 6);
+                } while (optionChosen != 5);
 
             }
         }
@@ -83,7 +79,7 @@ namespace UlamRandomizer
         }
         private static void DisplayActions()
         {
-            string[] options = { "[1] add Ulam", "[2] Remove Ulam", "[3] Display Ulam", "[4] Search an Ulam", "[5] Pick an Ulam!", "[6] Exit" };
+            string[] options = { "[1] add Ulam", "[2] Display Ulam", "[3] Search an Ulam from API", "[4] Look up Ulam from API", "[5] Pick an Ulam!", "[6] Exit" };
 
             Console.WriteLine("---------------------");
             foreach (string opt in options)
@@ -188,7 +184,7 @@ namespace UlamRandomizer
             ConsoleKey kc;
             do
             {
-                Ulam RandomUlam = BusinessLogic.GetRandomUlam();
+                Ulam RandomUlam = BusinessLogic.GetRandomUlam(BusinessLogic.GetUlams());
 
                 Console.WriteLine($"The selected ulam is {RandomUlam.UlamName}. \n");
 

@@ -47,6 +47,7 @@ namespace UlamRandomizerDataLogic
         }
         public List<Ulam> GetUlams()
         {
+            autoNumber(ulamList);
             return ulamList;
         }
 
@@ -66,6 +67,33 @@ namespace UlamRandomizerDataLogic
             if (ulamEdit.ulamDescription != "")
             {
                 ulamList[index].ulamDescription = ulamEdit.ulamDescription;
+            }
+        }
+
+        public Ulam GetUlamByID(int UlamID)
+        {
+            int index = -1;
+            for (int i = 0; i < ulamList.Count; i++)
+            {
+                if (ulamList[i].Id == UlamID)
+                {
+                    return ulamList[i];
+                }
+
+            }
+            return null;
+
+        }
+        private void autoNumber(List<Ulam> list)
+        {
+            int index = 0;
+            foreach (Ulam ulam in list)
+            {
+               if (ulam.Type.Equals("Custom"))
+                {
+                    ulam.Id = index;
+                    index++;
+                }
             }
         }
     }
