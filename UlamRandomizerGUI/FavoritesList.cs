@@ -15,6 +15,7 @@ namespace UlamRandomizerGUI
     public partial class FavoritesList : Form
     {
         private Account curr;
+        List<Ulam> Favorites;
         public FavoritesList(Account CurrentAccount)
         {
             InitializeComponent();
@@ -41,7 +42,7 @@ namespace UlamRandomizerGUI
         private async void LoadFavorites()
         {
             AccountBusinessLogic ABL = new AccountBusinessLogic();
-            List<Ulam> Favorites = await ABL.GetFavoriteAll(curr);
+            Favorites = await ABL.GetFavoriteAll(curr);
 
             dgFavorites.DataSource = null;
             dgFavorites.DataSource = Favorites;
@@ -66,7 +67,7 @@ namespace UlamRandomizerGUI
                 }
             }
         }
-        
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -93,7 +94,7 @@ namespace UlamRandomizerGUI
 
             if (TypeUlam.Equals("Custom"))
             {
-                EditSelectedUlam edit = new EditSelectedUlam(curr, ulamSelected,this);
+                EditSelectedUlam edit = new EditSelectedUlam(curr, ulamSelected, this);
                 edit.Show();
             }
             else
@@ -101,5 +102,58 @@ namespace UlamRandomizerGUI
                 MessageBox.Show("Error: Cannot Edit Ulam from the API", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
         }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            EmailBL emailBL = new EmailBL();
+            if (Favorites.Count == 0)
+            {
+                MessageBox.Show("Your favorites list is empty.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                emailBL.sendFavouritesEmail(curr.Email, curr.FirstName, Favorites);
+                MessageBox.Show("Favorites list sent to your email successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error sending email: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
+            }
+        }
+
+
+        //private async Task btn_click_sendFavToEmail(object sender, EventArgs e)
+        //{
+        //    EmailBL emailBL = new EmailBL();
+        //    if (Favorites.Count == 0)
+        //    {
+        //        MessageBox.Show("Your favorites list is empty.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        return;
+        //    }
+
+        //    try
+        //    {
+        //        var confirmSent = await emailBL.sendFavouritesEmail(curr.Email, curr.FirstName, Favorites);
+        //        if (confirmSent)
+        //        {
+        //            MessageBox.Show("Favorites list sent to your email successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Failed to send favorites list to your email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error sending email: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+
+        //    }
+        //}
     }
 }

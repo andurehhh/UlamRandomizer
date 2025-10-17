@@ -23,8 +23,9 @@ namespace UlamRandomizerGUI
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
+            EmailBL emailBL = new EmailBL();
             AccountBusinessLogic ABL = new AccountBusinessLogic();
             string FirstName = txbFirst.Text.ToString();
             string LastName = txbLast.Text.ToString();
@@ -42,6 +43,8 @@ namespace UlamRandomizerGUI
                 {
                     ABL.AddAccount(Username, password, email, FirstName, LastName, Gender, Birthday);
                     MessageBox.Show("Account Created Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    await emailBL.sendConfirmationEmail(email, FirstName);
+
                     this.Close();
                 }
                 catch (Exception ex)

@@ -39,6 +39,7 @@
             panel1 = new Panel();
             btnEditUlam = new Button();
             btnRandomizeList = new Button();
+            btnExportEmail = new Button();
             ((System.ComponentModel.ISupportInitialize)dgFavorites).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -156,13 +157,25 @@
             // 
             btnRandomizeList.BackColor = Color.Wheat;
             btnRandomizeList.ForeColor = Color.Black;
-            btnRandomizeList.Location = new Point(313, 518);
+            btnRandomizeList.Location = new Point(325, 518);
             btnRandomizeList.Name = "btnRandomizeList";
             btnRandomizeList.Size = new Size(98, 54);
             btnRandomizeList.TabIndex = 36;
             btnRandomizeList.Text = "Randomize";
             btnRandomizeList.UseVisualStyleBackColor = false;
             btnRandomizeList.Click += btnRandomizeList_Click;
+            // 
+            // btnExportEmail
+            // 
+            btnExportEmail.BackColor = Color.Wheat;
+            btnExportEmail.ForeColor = Color.Black;
+            btnExportEmail.Location = new Point(221, 518);
+            btnExportEmail.Name = "btnExportEmail";
+            btnExportEmail.Size = new Size(98, 54);
+            btnExportEmail.TabIndex = 37;
+            btnExportEmail.Text = "Export to Email";
+            btnExportEmail.UseVisualStyleBackColor = false;
+            btnExportEmail.Click += button2_Click_1;
             // 
             // FavoritesList
             // 
@@ -171,6 +184,7 @@
             AutoSize = true;
             BackColor = Color.Honeydew;
             ClientSize = new Size(800, 628);
+            Controls.Add(btnExportEmail);
             Controls.Add(btnRandomizeList);
             Controls.Add(btnEditUlam);
             Controls.Add(dgFavorites);
@@ -199,5 +213,6 @@
         private Panel panel1;
         private Button btnEditUlam;
         private Button btnRandomizeList;
+        private Button btnExportEmail;
     }
 }

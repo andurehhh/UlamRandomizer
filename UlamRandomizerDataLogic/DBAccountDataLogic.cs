@@ -45,7 +45,7 @@ namespace UlamRandomizerDataLogic
 
         public Account IdentifyUser(int AccountID)
         {
-            var FindUser = "SELECT ac.AccountID, Username,Password,FirstName,LastName,Gender,Birthday from tbl_AccountCredentials as ac LEFT JOIN tbl_AccountDetails as ad ON ac.AccountID = ad.AccountID WHERE ac.accountID = @accountID";
+            var FindUser = "SELECT ac.Email, ac.AccountID, Username,Password,FirstName,LastName,Gender,Birthday from tbl_AccountCredentials as ac LEFT JOIN tbl_AccountDetails as ad ON ac.AccountID = ad.AccountID WHERE ac.accountID = @accountID";
             SqlCommand FindUserCommand = new SqlCommand(FindUser, sqlconnection);
             FindUserCommand.Parameters.AddWithValue("@accountID", AccountID);
             sqlconnection.Open();
@@ -53,6 +53,7 @@ namespace UlamRandomizerDataLogic
 
             if (read.Read())
             {
+                CurrentUser.Email = read["Email"].ToString();
                 CurrentUser.Id = Convert.ToInt32(read["AccountID"]);
                 CurrentUser.FirstName = read["FirstName"].ToString();
                 CurrentUser.LastName = read["LastName"].ToString();
