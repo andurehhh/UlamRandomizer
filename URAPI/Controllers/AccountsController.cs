@@ -9,7 +9,14 @@ namespace URAPI.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        AccountBusinessLogic ABL = new AccountBusinessLogic();
+
+        private readonly AccountBusinessLogic ABL;
+
+        public AccountsController(AccountBusinessLogic accountBusinessLogic)
+        {
+            ABL = accountBusinessLogic;
+        }
+
         [HttpGet("Confirm Login")]
         public bool ConfirmLogin(string Username,string Password)
         {
@@ -18,7 +25,8 @@ namespace URAPI.Controllers
         [HttpPost("Add Account")]
         public bool AddAccount(Account account)
         {
-            return AddAccount(account);
+            ABL.AddAccount(account.Username, account.Password, account.Email, account.FirstName, account.LastName, account.Gender,account.Birthday);
+            return true;
         }
         [HttpGet("Check If Account Exists")]
         public bool DoesAccountExists(string Username)

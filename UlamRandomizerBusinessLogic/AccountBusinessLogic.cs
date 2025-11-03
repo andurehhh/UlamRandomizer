@@ -17,6 +17,12 @@ namespace UlamRandomizerBusinessLogic
         //}
         int currentID;
         static DBAccountDataLogic AccountLogic = new DBAccountDataLogic();
+        private readonly EmailBL emailBL;
+        public AccountBusinessLogic(EmailBL emailBL)
+        {
+            this.emailBL = emailBL;
+        }
+
         public bool ConfirmLogin(string Username, string Password)
         {
             string username = AccountLogic.FindLogin(Username)[0];
@@ -44,6 +50,7 @@ namespace UlamRandomizerBusinessLogic
         public void AddAccount(string username, string password, string email, string firstName, string lastName, string gender, DateOnly birthday)
         {
             Account newAcc = new Account(username, password, email, firstName, lastName, gender, birthday);
+            emailBL.sendConfirmationEmail(email, username);
             AccountLogic.AddAccount(newAcc);
         }
         public bool DoesAccountExists(string email)

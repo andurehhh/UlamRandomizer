@@ -26,6 +26,7 @@ namespace UlamRandomizerGUI
         private async void button1_Click(object sender, EventArgs e)
         {
             EmailBL emailBL = new EmailBL();
+
             AccountBusinessLogic ABL = new AccountBusinessLogic();
             string FirstName = txbFirst.Text.ToString();
             string LastName = txbLast.Text.ToString();

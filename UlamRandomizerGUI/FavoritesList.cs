@@ -105,25 +105,25 @@ namespace UlamRandomizerGUI
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            EmailBL emailBL = new EmailBL();
-            if (Favorites.Count == 0)
-            {
-                MessageBox.Show("Your favorites list is empty.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            //EmailBL emailBL = new EmailBL();
+            //if (Favorites.Count == 0)
+            //{
+            //    MessageBox.Show("Your favorites list is empty.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
 
-            try
-            {
-                emailBL.sendFavouritesEmail(curr.Email, curr.FirstName, Favorites);
-                MessageBox.Show("Favorites list sent to your email successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //try
+            //{
+            //    emailBL.sendFavouritesEmail(curr.Email, curr.FirstName, Favorites);
+            //    MessageBox.Show("Favorites list sent to your email successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error sending email: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error sending email: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
 
-            }
+            //}
         }
 
 

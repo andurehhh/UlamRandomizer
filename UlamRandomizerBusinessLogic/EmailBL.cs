@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
+using MimeKit;
+using Org.BouncyCastle.Asn1.Ocsp;
+using UlamCommon;
+
 namespace UlamRandomizerBusinessLogic
 {
-    using MailKit.Net.Smtp;
-    using MimeKit;
-    using Org.BouncyCastle.Asn1.Ocsp;
-    using UlamCommon;
-
     public class EmailBL
     {
+        private readonly IConfiguration _configuration;
+
+        public EmailBL(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public async Task sendConfirmationEmail(string StringEmail,string Username)
         {
 
@@ -29,8 +37,15 @@ namespace UlamRandomizerBusinessLogic
                 email.Body = builder.ToMessageBody();
 
                 using var smtp = new SmtpClient();
-                smtp.Connect("sandbox.smtp.mailtrap.io", 2525, false);
-                smtp.Authenticate("86e163b69f42f6", "4b161216c2d723");
+                //smtp.Connect("sandbox.smtp.mailtrap.io", 2525, false);
+                smtp.Connect(
+                    _configuration["EmailSettings:SmtpHost"],
+                    int.Parse(_configuration["EmailSettings:SmtpPort"]),
+                    MailKit.Security.SecureSocketOptions.StartTls);
+
+                smtp.Authenticate(
+                    _configuration["EmailSettings:SmtpUsername"],
+                    _configuration["EmailSettings:SmtpPassword"]);
                 smtp.Send(email);
 
                 smtp.Disconnect(true);

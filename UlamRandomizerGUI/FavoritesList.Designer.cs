@@ -168,6 +168,7 @@
             // btnExportEmail
             // 
             btnExportEmail.BackColor = Color.Wheat;
+            btnExportEmail.Enabled = false;
             btnExportEmail.ForeColor = Color.Black;
             btnExportEmail.Location = new Point(221, 518);
             btnExportEmail.Name = "btnExportEmail";

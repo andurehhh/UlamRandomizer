@@ -10,7 +10,7 @@ namespace UlamRandomizer
 {
     internal class Program
     {
-        static AccountBusinessLogic ABL = new AccountBusinessLogic();
+        //static AccountBusinessLogic ABL = new AccountBusinessLogic();
 
         static void Main(string[] args)
         {
@@ -291,19 +291,19 @@ namespace UlamRandomizer
             string user = Console.ReadLine();
             Console.WriteLine("Password: ");
             string pass = Console.ReadLine();
-            bool login = ABL.ConfirmLogin(user, pass);
+            //bool login = ABL.ConfirmLogin(user, pass);
 
-            if (login)
-            {
-                Console.WriteLine("Login Successful!");
-                return true;
+            //if (login)
+            //{
+            //    Console.WriteLine("Login Successful!");
+            //    return true;
 
-            }
-            else
-            {
-                retry = false;
-                Console.WriteLine("ERROR: Wrong username or Password");
-            }
+            //}
+            //else
+            //{
+            //    retry = false;
+            //    Console.WriteLine("ERROR: Wrong username or Password");
+            //}
             return false;
 
 
@@ -342,39 +342,39 @@ namespace UlamRandomizer
             Console.WriteLine("Let's Create an Account!: ");
             Console.WriteLine("Enter your email:");
             string email = Console.ReadLine();
-            if (ABL.DoesAccountExists(email))
-            {
-                Console.WriteLine("Error! Account already Exists.");
-            }
-            else
-            {
-                Console.WriteLine("Enter your username:");
-                string user = Console.ReadLine();
-                Console.WriteLine("Password");
-                string pass = Console.ReadLine();
-                Console.WriteLine("Password");
-                string confpass = Console.ReadLine();
+            ////if (ABL.DoesAccountExists(email))
+            ////{
+            ////    Console.WriteLine("Error! Account already Exists.");
+            ////}
+            //else
+            //{
+            //    Console.WriteLine("Enter your username:");
+            //    string user = Console.ReadLine();
+            //    Console.WriteLine("Password");
+            //    string pass = Console.ReadLine();
+            //    Console.WriteLine("Password");
+            //    string confpass = Console.ReadLine();
 
-                if (pass.Equals(confpass))
-                {
-                    Console.WriteLine("Tell me about yourself: ");
-                    Console.WriteLine("First Name: ");
-                    string FName = Console.ReadLine();
+            //    if (pass.Equals(confpass))
+            //    {
+            //        Console.WriteLine("Tell me about yourself: ");
+            //        Console.WriteLine("First Name: ");
+            //        string FName = Console.ReadLine();
 
-                    Console.WriteLine("Last Name:");
-                    string LName = Console.ReadLine();
+            //        Console.WriteLine("Last Name:");
+            //        string LName = Console.ReadLine();
 
-                    Console.WriteLine("Male, Female, Non-Binary or Prefer not to Tell?");
-                    string Gender = Console.ReadLine();
+            //        Console.WriteLine("Male, Female, Non-Binary or Prefer not to Tell?");
+            //        string Gender = Console.ReadLine();
 
-                    Console.WriteLine("When's your Birthday? yyyy-mm-dd");
-                    DateOnly Bday = DateOnly.Parse(Console.ReadLine());
+            //        Console.WriteLine("When's your Birthday? yyyy-mm-dd");
+            //        DateOnly Bday = DateOnly.Parse(Console.ReadLine());
 
-                    ABL.AddAccount(user, pass, email, FName, LName, Gender, Bday);
+            //        ABL.AddAccount(user, pass, email, FName, LName, Gender, Bday);
 
-                    Console.WriteLine("You're Fully Registered!");
-                }
-            }
+            //        Console.WriteLine("You're Fully Registered!");
+            //    }
+            //}
 
 
 

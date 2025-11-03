@@ -1,4 +1,6 @@
 
+using UlamRandomizerBusinessLogic;
+
 namespace URAPI
 {
     public class Program
@@ -13,6 +15,9 @@ namespace URAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<EmailBL>();
+            builder.Services.AddScoped<UlamRandomizerBusinessLogic.AccountBusinessLogic>();
 
             var app = builder.Build();
 
