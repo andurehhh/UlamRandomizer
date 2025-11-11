@@ -17,21 +17,21 @@ namespace URAPI.Controllers
             ABL = accountBusinessLogic;
         }
 
-        [HttpGet("Confirm Login")]
+        [HttpGet("ConfirmLogin")]
         public bool ConfirmLogin(string Username,string Password)
         {
             return ABL.ConfirmLogin(Username, Password);
         }
-        [HttpPost("Add Account")]
-        public bool AddAccount(Account account)
+        [HttpPost("AddAccount")]
+        public bool AddAccount(string Username, string Password, string Email, string FirstName, string LastName, string Gender, DateOnly Birthday)
         {
-            ABL.AddAccount(account.Username, account.Password, account.Email, account.FirstName, account.LastName, account.Gender,account.Birthday);
+            ABL.AddAccount(Username, Password, Email, FirstName, LastName, Gender,Birthday);
             return true;
         }
-        [HttpGet("Check If Account Exists")]
-        public bool DoesAccountExists(string Username)
+        [HttpGet("DoesAccountExist")]
+        public bool DoesAccountExists(string email)
         {
-            return ABL.DoesAccountExists(Username);
+            return ABL.DoesAccountExists(email);
         }
         [HttpPost("Add Custom Ulam To Favorites")]
         public void AddCustomUlamToFavorites(int accountID, int UlamID, string UlamName)
